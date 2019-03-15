@@ -1,0 +1,6 @@
+import './Header.css';
+
+.header {
+    grid-area: h;
+    background-color: green;
+  }

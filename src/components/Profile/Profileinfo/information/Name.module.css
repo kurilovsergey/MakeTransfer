@@ -1,0 +1,18 @@
+.headinfo{
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 5px;
+    grid-area: n;
+    height: 50px;
+    box-shadow: 0px 1px 4px rgba(91, 137, 164, 0.25);
+}
+
+.name{
+    font-size: 20px;
+    margin-left: 15px;
+}
+
+.position{
+    font-size: 15px;
+    margin-left: 15px;
+}

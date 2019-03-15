@@ -1,0 +1,20 @@
+.content {
+  height: 300px;
+  width: 1000px;
+  grid-template-areas:
+  "n n n"
+  "a s c";
+  display: grid;
+  grid-template-columns: 0.37fr 1fr 1fr;
+  grid-gap: 5px; 
+  font-family: 'Open Sans', sans-serif;
+}
+
+img {
+  width: 139px;
+  height: 181px;
+}
+
+
+
+

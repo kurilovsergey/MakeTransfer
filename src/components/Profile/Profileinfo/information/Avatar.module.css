@@ -1,0 +1,13 @@
+.avatar{
+background-color: white;
+border: 1px solid grey;
+border-radius: 5px;
+grid-area: a;
+margin: 0 auto;
+}
+img {
+  width: 139px;
+  height: 181px;
+  
+  
+}
