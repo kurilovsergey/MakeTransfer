@@ -6,25 +6,24 @@ import {sendmessage, updatemessage} from '../../redux/dialogs-reducer';
 
 const Dialogs = (props) => {
 
-let state = props.store.getState().Messagepage;
 
-let dialogElements = state.dialogData.map(dialog=><DialogItems name={dialog.name} 
+debugger
+let dialogElements = props.state.dialogData.map(dialog=><DialogItems name={dialog.name} 
 	  id={dialog.id}/>);
 
-let messagesElemets = state.messageData.map(message=><Message message={message.message}/>);
+let messagesElemets = props.state.messageData.map(message=><Message message={message.message}/>);
 
-let newmessagebody = state.newMessage;
+let newmessagebody = props.state.newMessage;
 
 let onSendMessage = () => {
-props.store.dispatch(sendmessage())
+props.sendMessage();
 }
 
 let onNewMessage = (event) => {
  let body = event.target.value;
- props.store.dispatch(updatemessage(body));
+ props.updatenewmessage(body);
+ 
 }
-
-
 	return (
 		<div className={s.dialogs}>
 		  <div className={s.dialogsItems}>

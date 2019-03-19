@@ -9,7 +9,7 @@ const Profileinfo =() => {
 return (
       <div className={s.content}>
         <Avatar />
-        <Name />
+        <Name name='cr7' />
         <Statistic />
         <Club />
       </div>

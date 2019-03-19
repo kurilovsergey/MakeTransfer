@@ -1,8 +1,9 @@
 import React from 'react';
 import s from './Name.module.css';
 
-const Name =() => {
-return (
+const Name =(props) => {
+  
+return(
   <div className={s.headinfo}>
      <div className={s.name}>Cristiano Ronaldo</div>
      <div className={s.position}>Forvard</div>
