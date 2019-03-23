@@ -8,12 +8,12 @@ const Dialogs = (props) => {
 
 
 debugger
-let dialogElements = props.state.dialogData.map(dialog=><DialogItems name={dialog.name} 
+let dialogElements = props.Messagepage.dialogData.map(dialog=><DialogItems name={dialog.name} 
 	  id={dialog.id}/>);
 
-let messagesElemets = props.state.messageData.map(message=><Message message={message.message}/>);
+let messagesElemets = props.Messagepage.messageData.map(message=><Message message={message.message}/>);
 
-let newmessagebody = props.state.newMessage;
+let newmessagebody = props.Messagepage.newMessage;
 
 let onSendMessage = () => {
 props.sendMessage();
