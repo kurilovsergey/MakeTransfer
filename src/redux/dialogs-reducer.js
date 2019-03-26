@@ -17,16 +17,19 @@ let initialstate = {
 
 export const dialog_reducer = (state=initialstate, action) => {
     if (action.type === UPDATE_NEWMESSAGE) {
-        state.newMessage = action.body;
-        return state;
+        //state.newMessage = action.body;
+        return{
+        ...state,
+        newMessage: action.body
+        }
     } else if (action.type === SEND_MESSAGE) {
-        let body = state.newMessage;
-        state.newMessage = '';
-        state.messageData.push({id: 4, message: body});
-         
-    }
+      let copyMessageData=state.messageData;
+      let body = state.newMessage;
+      copyMessageData.push({id: 4, message: body});
+      return Object.assign({}, state, {newMessage: ''}, {messageData: copyMessageData} );
+      } 
     return state;
-}
+};
 
 export let sendmessage  = () => {
     return {

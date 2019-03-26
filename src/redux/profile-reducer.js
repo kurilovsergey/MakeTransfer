@@ -11,21 +11,22 @@ let initialstate = {
 
 const profile_reducer = (state = initialstate, action) => {
 
-
         if (action.type === ADD_POST) {
-          let newpost=({id: 5, message: action.textpost, likes: 3
-          });
-              state.postData.push(newpost);
-              state.newposttext='';
+
+      let copyPostData=state.postData;
+      copyPostData.push({id: 5, message: action.textpost, likes: 3});
+
+      return Object.assign({}, state, {newposttext: ''}, {postData: copyPostData} );
+      } 
               
-        } else if (action.type === UPDATE_NEWPOSTTEXT) {
-              state.newposttext = action.newtext;
-             
+         else if (action.type === UPDATE_NEWPOSTTEXT) {
+              return {...state,
+               newposttext: action.newtext}
         } 
     
 
     return state;
-}
+};
 
 export let addpostactioncreator  = (text) => {
     return {
