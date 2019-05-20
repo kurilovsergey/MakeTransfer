@@ -1,13 +1,14 @@
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SETUSERS = "SETUSERS";
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_TOTAL_COUNT = "SET_TOTAL_COUNT";
 
 let initialstate = {
-  users:   [
-  {id: 1, photoUrl: 'https://s5o.ru/storage/simple/ru/edt/54/37/13/54/rue9ab1912e79.jpg', followed: false, profession: "Agent", fullname: "Mendech", status: "find player", location: {city: "Porto", country: 'Portugal'}},
-  {id: 2, photoUrl: 'https://s5o.ru/storage/simple/ru/edt/6e/e2/c0/9e/rue620112b2df.png', followed: true, profession: "Player", fullname: "Cristiano Ronaldo", status: "find team", location: {city: "Tourin", country: 'Italy'}},
-  {id: 3, photoUrl: 'https://s5o.ru/storage/simple/ru/edt/88/54/61/32/rue331fd6e268.jpg', location: {city: "Manchster", country: 'UK'}}
-  ]
+  users:   [],
+  pageSize: 5,
+  totalUsersCount: 0,
+  currentPage: 1
 };
 
 const users_reducer = (state = initialstate, action) => {
@@ -33,9 +34,15 @@ switch(action.type) {
          return i;
         })
     }
-    case SETUSERS: 
-    return {...state, users: [...state.users, ...action.users]};
-    
+    case SETUSERS: {
+        return { ...state, users: action.users }
+    }
+    case SET_CURRENT_PAGE: {
+        return {...state, currentPage: action.currentPage}
+    }
+    case SET_TOTAL_COUNT: {
+        return {...state, totalUsersCount: action.count}
+    }
 default:
    return state;
  }
@@ -45,6 +52,10 @@ default:
 
  export let unfollowAC  = (userID) => ({type: UNFOLLOW, userID});
 
- export const setUsersAC = (user) => ({type: SETUSERS });
+ export let setUsersAC = (users) => ({type: SETUSERS, users});
+
+ export let setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
+
+ export let setTotalCountAC = (totalCount) => ({type: SET_TOTAL_COUNT, count: totalCount })
 
 export default users_reducer;
