@@ -1,10 +1,14 @@
 import React from 'react';
 import s from './Avatar.module.css';
+import Preloader from '../../../common/Preloader/Preloader'
 
-const Avatar =() => {
+const Avatar =(props) => {
+  if (!props.profile) {
+    return <Preloader/>
+  }
 return (
         <div className={s.avatar} >
-          <img src='https://tmssl.akamaized.net//images/portrait/header/8198-1515761767.jpg?lm=1515761786' />
+          <img src={props.profile.photos.large} />
           <button>Написать игроку</button>
         </div>
       

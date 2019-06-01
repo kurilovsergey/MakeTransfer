@@ -5,10 +5,10 @@ import Statistic from './information/Statistic';
 import Club from './information/Club';
 import Name from './information/Name';
 
-const Profileinfo =() => {
+const Profileinfo =(props) => {
 return (
       <div className={s.content}>
-        <Avatar />
+        <Avatar profile={props.profile} />
         <Name name='cr7' />
         <Statistic />
         <Club />
