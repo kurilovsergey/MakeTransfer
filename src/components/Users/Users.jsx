@@ -13,13 +13,15 @@ let Users = (props) => {
 
 	for (let i=1; i<=pageCount; i++) {
 		pages.push(i);
-		debugger;
+		
 	}
+
+ 
 
 	return <div>
 	     <div>
            {pages.map(p => <span className={props.currentPage == p && s.selectPage} 
-		                         onClick={(e)=>props.onPageChanged(p)}>{p}</span>)}
+		                         onClick={(e)=>props.onPageChanged(p)}>{" "+p}</span>)}
 		
          </div>
 
@@ -33,10 +35,36 @@ let Users = (props) => {
                        </NavLink>
                         {u.followed
                             ? <button onClick={() => {
-                                props.unfollow(u.id)
+
+                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                {withCredentials:true,
+                                headers: {
+                                    "API-KEY": "2522ab72-2cb9-46ff-a415-53a5c1188e2f"}
+                                })
+                                .then(response => {
+                                    console.log('repsunfollow '+response);
+                                    if (response.data.resultCode==0) {props.unfollow(u.id)}
+                                    
+                                    debugger
+                                });
+
+
+                                
                             }}>Unfollow</button>
                             : <button onClick={() => {
-                                props.follow(u.id)
+
+                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,{},
+                                 {withCredentials: true,
+                                headers: {
+                                    "API-KEY": "2522ab72-2cb9-46ff-a415-53a5c1188e2f"}
+                                })
+                                .then(response => {
+                                    console.log('reponse follow '+response);
+                                    if (response.data.resultCode==0) {props.follow(u.id)}
+                                    debugger
+                                });
+
+                                
                             }}>Follow</button>}
 
                     </div>
