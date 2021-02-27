@@ -4,7 +4,7 @@ import MyPostsContainer from './MyPosts/MyPostscontainer';
 import Profileinfo from './Profileinfo/Profileinfo'
 
 const Profile = (props) => {
-  
+  console.log('!^ '+props)
   return (
     <div className={s.content}>
       <Profileinfo profile={props.profile} />
