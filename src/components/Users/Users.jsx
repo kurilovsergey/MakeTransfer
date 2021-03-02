@@ -6,7 +6,8 @@ import userPhoto from '../../assets/images/userPhoto.png'
 
 
 let Users = (props) => {
-	
+	debugger
+    console.log(props)
 	let pageCount = Math.ceil(props.totalUsersCount/props.pageSize);
 
 	let pages = [];
@@ -16,7 +17,7 @@ let Users = (props) => {
 		
 	}
 
- 
+     
 
 	return <div>
 	     <div>
@@ -34,8 +35,8 @@ let Users = (props) => {
                              className={s.userPhoto}/>
                        </NavLink>
                         {u.followed
-                            ? <button onClick={() => {
-
+                            ? <button disabled={[1].some( id => id === u.id)} onClick={() => {
+                              props.toggleisFollowinginProgress(true, u.id);
                                 axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
                                 {withCredentials:true,
                                 headers: {
@@ -44,15 +45,14 @@ let Users = (props) => {
                                 .then(response => {
                                     console.log('repsunfollow '+response);
                                     if (response.data.resultCode==0) {props.unfollow(u.id)}
-                                    
-                                    debugger
+                                    props.toggleisFollowinginProgress(false, u.id);
                                 });
 
-
+//rops.followinginProgress
                                 
                             }}>Unfollow</button>
-                            : <button onClick={() => {
-
+                            : <button disabled={[1].some(id => id === u.id)} onClick={() => {
+                                props.toggleisFollowinginProgress(true, u.id);
                                 axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,{},
                                  {withCredentials: true,
                                 headers: {
@@ -61,7 +61,7 @@ let Users = (props) => {
                                 .then(response => {
                                     console.log('reponse follow '+response);
                                     if (response.data.resultCode==0) {props.follow(u.id)}
-                                    debugger
+                                    props.toggleisFollowinginProgress(false, u.id);
                                 });
 
                                 
