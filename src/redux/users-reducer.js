@@ -1,3 +1,5 @@
+import {UsersAPI} from '../../src/api/api'
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SETUSERS = "SETUSERS";
@@ -5,6 +7,8 @@ const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_COUNT = "SET_TOTAL_COUNT";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS";
+
+
 
 let initialstate = {
   users:   [],
@@ -62,9 +66,9 @@ default:
  }
 };
 
- export let follow  = (userID) => ({type: FOLLOW, userID });
+ export let followSuccess  = (userID) => ({type: FOLLOW, userID });
 
- export let unfollow  = (userID) => ({type: UNFOLLOW, userID});
+ export let unfollowSuccess  = (userID) => ({type: UNFOLLOW, userID});
 
  export let setUsers = (users) => ({type: SETUSERS, users});
 
@@ -75,5 +79,38 @@ default:
  export let toggleisFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching })
 
  export let toggleisFollowinginProgress = (isFetching, userID) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID })
+
+ export const getUsers = (currentPage,pageSize) => {
+      return (dispatch) => {
+    dispatch(toggleisFetching(true));
+    UsersAPI.getUsers(currentPage,pageSize).then(data => {
+        dispatch(setUsers(data.items));
+        dispatch(setTotalUsersCount(data.totalCount));
+        dispatch(toggleisFetching(false));
+    });
+  }
+ };
+
+ export const follow = (userID) => {
+    return (dispatch) => {
+        dispatch(toggleisFollowinginProgress(true, userID));
+        UsersAPI.follow(userID).then(response => {
+            if (response.data.resultCode==0) {dispatch(followSuccess(userID))}
+            dispatch(toggleisFollowinginProgress(false, userID));
+  });
+}
+};
+
+export const unfollow = (userID) => {
+    return (dispatch) => {
+        dispatch(toggleisFollowinginProgress(true, userID));
+        UsersAPI.unfollow(userID).then(response => {
+            if (response.data.resultCode==0) {dispatch(unfollowSuccess(userID))}
+            dispatch(toggleisFollowinginProgress(false, userID));
+  });
+}
+};
+
+ 
 
 export default users_reducer;
