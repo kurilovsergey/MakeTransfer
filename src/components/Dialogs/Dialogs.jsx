@@ -3,7 +3,6 @@ import s from './Dialogs.module.css';
 import DialogItems from './DialogItems/DialogItems';
 import Message from './Message/Message.jsx';
 import {sendmessage, updatemessage} from '../../redux/dialogs-reducer';
-import { Redirect } from 'react-router-dom';
 import Login from '../Login/Login';
 
 const Dialogs = (props) => {
@@ -25,7 +24,7 @@ let onNewMessage = (event) => {
  
 }
 
-if (!props.isAuth) return <Redirect to={"/login"}/>
+
 
 	return (
 		<div className={s.dialogs}>

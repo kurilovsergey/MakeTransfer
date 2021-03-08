@@ -1,6 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import s from './Dialogs.module.css';
-
+import {WithAuthRedirect} from '../../components/../hoc/hoc'
 import {sendmessage, updatemessage} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
@@ -9,7 +10,7 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state) => {
 	return {
 		Messagepage: state.Messagepage,
-	    isAuth: state.Auth.isAuth }
+	   }
 }
 
 const mapDispatchTooProps = (dispatch) => {
@@ -18,6 +19,8 @@ const mapDispatchTooProps = (dispatch) => {
 	    updatenewmessage: (body) => {dispatch(updatemessage(body))}  }
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchTooProps)(Dialogs);
+let AuthRedirectComponent = WithAuthRedirect(Dialogs);
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchTooProps)(AuthRedirectComponent);
 
 export default DialogsContainer;
