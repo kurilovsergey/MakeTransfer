@@ -1,12 +1,13 @@
 import React from 'react';
 import s from './Name.module.css';
+import ProfileStatus from './ProfileStatus.jsx'
 
 const Name =(props) => {
   
 return(
-  <div className={s.headinfo}>
-     <div className={s.name}>Cristiano Ronaldo</div>
-     <div className={s.position}>Forvard</div>
+  <div >
+     <div >Cristiano Ronaldo</div>
+     <ProfileStatus status={"HI"}/>
   </div>   
 )
 }
