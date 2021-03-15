@@ -6,6 +6,7 @@ import Auth_reducer from './Auth-reducer';
 import thunkMiddleware from "redux-thunk"
 
 
+
 let reducers = combineReducers({
     Wallpage: profile_reducer,
     Messagepage: dialog_reducer,
