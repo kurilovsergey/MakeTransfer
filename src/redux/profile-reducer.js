@@ -30,10 +30,7 @@ const profile_reducer = (state = initialstate, action) => {
     return {...state, postData: [...state.postData, newpost], newposttext: ""};
   } 
 
-  case UPDATE_NEWPOSTTEXT: {
-    return {...state,
-     newposttext: action.newtext} 
-  }
+
 
   case SET_STATUS: {
     return {...state,
@@ -63,12 +60,7 @@ export let setuserprofile  = (profile) => {
  }
 }
 
-export let updatenewposttext  = (text) => {
-  return {
-    type: UPDATE_NEWPOSTTEXT,
-    newtext: text
-  } 
-}
+
 
 export const setStatus  = (status) => {
   return {

@@ -2,21 +2,19 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {addpostactioncreator, updatenewposttext} from '../../../redux/profile-reducer';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 const MyPosts = (props) => {
   
   let newpostelement = React.createRef();
   
-  let addPost = () => {
-    let text=newpostelement.current.value; 
-    props.addPost(text);
+  let addPost = (newPost) => {
+    //let text=newpostelement.current.value; 
+    props.addPost(newPost);
 
   }
   debugger
-  let OnPostChange = () => {
-    let text=newpostelement.current.value;
-    props.updateNewPost(text);
-  } 
+  
 
   let postElemements=props.postData.map(post=><Post message={post.message} />);
  
@@ -24,16 +22,37 @@ const MyPosts = (props) => {
   return (
     <div className={s.mypost}>
       My posts
-      <div>
-        <textarea onChange={OnPostChange} ref={newpostelement} value={props.newposttext} />
-        <button onClick={addPost}>Add post</button>
-      </div>
+
       <div className={s.posts}>
       {postElemements}
       </div>
+      <AddNewPostForm addPost={addPost}/>
     </div>
   )
 
 }
 
 export default MyPosts;
+
+const AddNewPostForm = (props) => (
+
+	<div>
+	  <Formik
+		initialValues={{
+		  newPost: ''
+		}}
+		onSubmit={async (values) => {
+		  await new Promise((r) => setTimeout(r, 500));
+		  //alert(JSON.stringify(values, null, 2))
+      props.addPost(values.newPost);
+		}}
+	  >
+	   
+		<Form>
+		  <Field id="newPost" name="newPost" placeholder="your text" />
+
+		  <button type="submit">Send</button>
+		</Form>
+	  </Formik>
+	</div>
+  );

@@ -1,4 +1,3 @@
-const UPDATE_NEWMESSAGE = "UNPATE NEW MESSAGE";
 const SEND_MESSAGE = "SEND MESSAGE";
 
 let initialstate = {
@@ -11,34 +10,25 @@ let initialstate = {
         {id: 1, name: 'Player1'},
         {id: 2, name: 'Coach'},
         {id: 3, name: 'Agent1'}
-         ],
-    newMessage: ""
+         ]
 };
 
 export const dialog_reducer = (state=initialstate, action) => {
-    if (action.type === UPDATE_NEWMESSAGE) {
-        return{
-        ...state,
-        newMessage: action.body
-        }
-    } else if (action.type === SEND_MESSAGE) {
-      let body = state.newMessage;
-      return {...state, newMessage: "", messageData:  [...state.messageData, {id: 4, message: body}]};;
+    if (action.type === SEND_MESSAGE) {
+      let body = action.newmessage;
+      console.log('body ',body)
+      return {...state, messageData:  [...state.messageData, {id: 4, message: body}]};;
       } 
     return state;
 };
 
-export let sendmessage  = () => {
+export let sendmessage  = (newmessage) => {
     return {
-       type: SEND_MESSAGE
+       type: SEND_MESSAGE,
+       newmessage
            }
           }
   
-export let updatemessage  = (text) => {
-    return {
-      type: UPDATE_NEWMESSAGE,
-      body: text
-          } 
-        }
+
 
 export default dialog_reducer;
