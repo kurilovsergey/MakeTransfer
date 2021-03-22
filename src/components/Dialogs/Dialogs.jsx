@@ -5,6 +5,7 @@ import Message from './Message/Message.jsx';
 import {sendmessage, updatemessage} from '../../redux/dialogs-reducer';
 import Login from '../Login/Login';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 
 
@@ -43,26 +44,38 @@ const Dialogs = (props) => {
 
 export default Dialogs;
 
-const AddMessageForm = (props) => (
 
-	<div>
-	  <Formik
-		initialValues={{
-		  newmessage: ''
-		}}
-		onSubmit={async (values) => {
-		  await new Promise((r) => setTimeout(r, 500));
-		  //alert(JSON.stringify(values, null, 2));
-		 //console.log(props); 
-		 props.addNewMessage(values.newmessage);
-		}}
-	  >
-	   
-		<Form>
-		  <Field id="newmessage" name="newmessage" placeholder="your text" />
+  const SignupSchema = Yup.object().shape({
+    newmessage: Yup.string()
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required')
+  });
 
-		  <button type="submit">Send</button>
-		</Form>
-	  </Formik>
-	</div>
+   const AddMessageForm = (props) => (
+    <div>
+      <h1>New Message</h1>
+      <Formik
+        initialValues={{
+			newmessage: ''
+        }}
+        validationSchema={SignupSchema}
+        
+        onSubmit={values => {
+          // same shape as initial values
+          //console.log("errors= ");
+          props.addNewMessage(values.newmessage);
+        }}
+      >
+        {({ errors, touched }) => (
+          <Form>
+            <Field className={errors.newmessage && touched.newmessage ? s.errors : null} name="newmessage"  id="newmessage"/>
+            {errors.newmessage && touched.newmessage ? (
+              <div>{errors.newmessage}</div>
+            ) : null}
+            <button type="submit">Submit</button>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );

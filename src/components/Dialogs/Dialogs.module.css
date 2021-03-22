@@ -21,3 +21,7 @@ grid-template-columns: 2fr 10fr 3fr;
 .messages message{
 
 }
+
+.errors {
+    border-color:  red;
+}

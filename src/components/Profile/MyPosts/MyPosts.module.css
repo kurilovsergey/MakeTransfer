@@ -3,3 +3,7 @@
     border: 1px solid grey;
     
 }
+
+.errors {
+    border-color:  red;
+}
