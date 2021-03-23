@@ -9,7 +9,7 @@ import { follow } from '../../redux/users-reducer';
 
 let Users = (props) => {
 	debugger
-    console.log(props)
+    console.log('currentPage ' ,props.currentPage)
 	let pageCount = Math.ceil(props.totalUsersCount/props.pageSize);
 
 	let pages = [];

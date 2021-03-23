@@ -7,6 +7,7 @@ import Preloader from '../common/Preloader/Preloader'
 import {UsersAPI} from '../../api/api.js'
 import { compose } from 'redux';
 import {WithAuthRedirect} from '../../components/../hoc/hoc'
+import { login } from '../../redux/Auth-reducer';
  
 class UsersContainer extends React.Component {
 	
@@ -16,8 +17,8 @@ class UsersContainer extends React.Component {
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.getUsers(pageNumber,this.props.pageSize);
-            
+        this.props.getUsers(pageNumber, this.props.pageSize);
+        
     }
   
 render() {

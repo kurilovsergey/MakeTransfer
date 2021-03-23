@@ -20,7 +20,7 @@ let initialstate = {
 };
 
 const users_reducer = (state = initialstate, action) => {
-
+console.log('user reduce ', action);
 switch(action.type) {
     case FOLLOW:
     return {
@@ -46,7 +46,7 @@ switch(action.type) {
         return { ...state, users: action.users }
     }
     case SET_CURRENT_PAGE: {
-        return {...state, currentPage: action.currentPage}
+        return {...state, currentPage: action.Page}
     }
     case SET_TOTAL_COUNT: {
         return {...state, totalUsersCount: action.count}
@@ -72,7 +72,7 @@ default:
 
  export let setUsers = (users) => ({type: SETUSERS, users});
 
- export let setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
+ export let setCurrentPage = (Page) => ({type: SET_CURRENT_PAGE, Page});
 
  export let setTotalUsersCount = (totalCount) => ({type: SET_TOTAL_COUNT, count: totalCount });
 
@@ -80,10 +80,11 @@ default:
 
  export let toggleisFollowinginProgress = (isFetching, userID) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID })
 
- export const getUsers = (currentPage,pageSize) => {
+ export const getUsers = (Page, pageSize) => {
       return (dispatch) => {
     dispatch(toggleisFetching(true));
-    UsersAPI.getUsers(currentPage,pageSize).then(data => {
+    dispatch(setCurrentPage(Page));
+    UsersAPI.getUsers(Page, pageSize).then(data => {
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));
         dispatch(toggleisFetching(false));

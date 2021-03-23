@@ -7,6 +7,7 @@ import {withRouter} from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import {WithAuthRedirect} from '../../components/../hoc/hoc'
 import { compose } from 'redux';
+import {getProfile, getStatusProfile, getAutorizatedUserID, getisAuth} from '../../redux/selectors/user/usersselectors'
 
 
  
@@ -33,11 +34,20 @@ class ProfileContainer extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-profile: state.Wallpage.profile,
-status: state.Wallpage.status,
-autorizatedUserID: state.Auth.userID,
-isAuth: state.Auth.isAuth
+profile: getProfile(state),
+status: getStatusProfile(state),
+autorizatedUserID: getAutorizatedUserID(state),
+isAuth: getisAuth(state)
 });
+
+/*
+let mapStateToProps = (state) => ({
+    profile: getProfile(state),
+    status: state.Wallpage.status,
+    autorizatedUserID: state.Auth.userID,
+    isAuth: state.Auth.isAuth
+    });
+*/
 
 export default compose(
     connect(mapStateToProps, {setuserprofile, getUserProfile, updateStatus, getStatus}),
