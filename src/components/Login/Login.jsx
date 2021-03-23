@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { MoreResources, DisplayFormikState } from "../Login/helper";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { login } from '../../redux/Auth-reducer';
+import { login, setResponseLoginErrorMessage } from '../../redux/Auth-reducer';
 import { compose } from 'redux';
 import { Redirect } from "react-router"
 
@@ -13,13 +13,14 @@ const Login = (props) => {
     return <Redirect to={"/profile"}/>
   }
     return   <div>
-        <LoginForm login={props.login}/>
+        <LoginForm login={props.login} messages={props.messages}/>
       </div>
     
 }
 
 let mapStateToProps = (state) => ({
   isAuth: state.Auth.isAuth,
+  messages: state.Auth.messages
   });
 
 export default connect(mapStateToProps, {login})(Login);
@@ -43,12 +44,10 @@ export const LoginForm = (props) => (
         rememberme: [],
       }}
       validationSchema={SignupSchema}
-      onSubmit={values => {
-        console.log(values);
-       alert(JSON.stringify(values, null, 2));
-       console.log("props login ",props);
-       props.login(values.email,values.password,true)
-       
+      onSubmit={(values, actions) => {
+       //alert(JSON.stringify(values, null, 2));
+       props.login(values.email,values.password,true);
+       if (props.messages) {actions.setErrors({ error: 'Unable to login with the provided credentials.'})};
       }}
     >
       {({ errors, touched }) => (
@@ -59,6 +58,10 @@ export const LoginForm = (props) => (
           <Field name="password" placeholder="password"/>
           {errors.password && touched.password ? (
             <div>{errors.password}</div>
+          ) : null}
+
+          {props.messages ? (
+            <div>{props.messages}</div>
           ) : null}
 
           <label>

@@ -6,7 +6,7 @@ const Name =(props) => {
   console.log('prrops ',props);
 return(
   <div >
-     <div >Cristiano Ronaldo</div>
+     <div >{props.autorizatedUserID}</div>
      <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
   </div>   
 )
