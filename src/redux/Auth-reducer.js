@@ -38,10 +38,9 @@ export default Auth_reducer;
   export const setResponseLoginErrorMessage = (messages) => ({type: SET_RESPONSE_LOGIN_ERROR, messages})
 
   export const getAuthUserData = () => (dispatch) => {
-    authAPI.me().then(response => {
+    return authAPI.me().then(response => {
       let {id,email,login}=response.data.data
       if (response.data.resultCode==0) {dispatch(setAuthUserData(id, login, email, true))}
-      
   });
   }
   
