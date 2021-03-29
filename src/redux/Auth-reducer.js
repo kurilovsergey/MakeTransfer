@@ -37,21 +37,19 @@ export default Auth_reducer;
   
   export const setResponseLoginErrorMessage = (messages) => ({type: SET_RESPONSE_LOGIN_ERROR, messages})
 
-  export const getAuthUserData = () => (dispatch) => {
-    return authAPI.me().then(response => {
+  export const getAuthUserData = () => async (dispatch) => {
+    let response = await authAPI.me()
       let {id,email,login}=response.data.data
       if (response.data.resultCode==0) {dispatch(setAuthUserData(id, login, email, true))}
-  });
-  }
+  };
+  
   
 
-  export const login = (email,password, rememberme) => (dispatch) => {
-    authAPI.login(email,password,rememberme).then(response => {
-      console.log("mess ",response.data.messages[0]);
+  export const login = (email,password, rememberme) => async (dispatch) => {
+    let response = await authAPI.login(email,password,rememberme)
       if (response.data.resultCode==0) {dispatch(getAuthUserData())}
       else dispatch(setResponseLoginErrorMessage(response.data.messages[0]));
-  });
-  } 
+  }; 
 
   export const logout = () => (dispatch) => {
     authAPI.logout().then(response => {
