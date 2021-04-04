@@ -5,6 +5,7 @@ import {addpostactioncreator, updatenewposttext} from '../../../redux/profile-re
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import {required} from '../../../utils/validators/validators'
 import * as Yup from 'yup';
+
 //import { ValidationSchemaExample } from '../../Login/Login';
 
 const MyPosts = (props) => {

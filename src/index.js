@@ -5,14 +5,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/reduxstore';
 import {Provider} from "react-redux";
+import MainApp from './App';
 
 
 
-ReactDOM.render(
-                <Provider store={store}>
-                <App/>
-                     </Provider>
-                ,document.getElementById('root'));
+ReactDOM.render(<MainApp/>
+,document.getElementById('root'))
+
 
 
 

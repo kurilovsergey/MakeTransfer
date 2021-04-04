@@ -8,7 +8,7 @@ const Name =(props) => {
 return(
   <div >
      <div >{props.autorizatedUserID}</div>
-     <ProfileStatusWithHook status={props.status} updateStatus={props.updateStatus}/>
+     <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
   </div>   
 )
 }

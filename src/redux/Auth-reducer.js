@@ -43,8 +43,6 @@ export default Auth_reducer;
       if (response.data.resultCode==0) {dispatch(setAuthUserData(id, login, email, true))}
   };
   
-  
-
   export const login = (email,password, rememberme) => async (dispatch) => {
     let response = await authAPI.login(email,password,rememberme)
       if (response.data.resultCode==0) {dispatch(getAuthUserData())}

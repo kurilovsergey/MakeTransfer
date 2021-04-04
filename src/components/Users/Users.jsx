@@ -1,5 +1,6 @@
 import React, { useImperativeHandle } from 'react';
 import s from './Users.module.css';
+import {useState, useEffect} from 'react';
 import * as axios from 'axios';
 import {NavLink} from "react-router-dom";
 import userPhoto from '../../assets/images/userPhoto.png'
@@ -8,26 +9,37 @@ import { follow } from '../../redux/users-reducer';
 
 
 let Users = (props) => {
-	debugger
-    console.log('currentPage ' ,props.currentPage)
-	let pageCount = Math.ceil(props.totalUsersCount/props.pageSize);
+
+	let pagesCount = Math.ceil(props.totalUsersCount/props.pageSize);
 
 	let pages = [];
 
-	for (let i=1; i<=pageCount; i++) {
+	for (let i=1; i<=pagesCount; i++) {
 		pages.push(i);
 		
 	}
+    let portionSize = 10;
 
-     
+    let portionCounter = Math.ceil(pagesCount / portionSize);
+    let [portionNumber, setPortionNumber] = useState(1);
+ 
+    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
+
+    let rightPortionPageNumber = portionNumber * portionSize;
 
 	return <div>
-	     <div>
-           {pages.map(p => <span className={props.currentPage == p && s.selectPage} 
-		                         onClick={(e)=>props.onPageChanged(p)}>{" "+p}</span>)}
-		
-         </div>
+        
+       
 
+         <div>
+        {portionNumber>1 &&
+         <button onClick={()=> setPortionNumber(portionNumber-1)}>{"<<"}</button>}
+           {pages.filter(p=> p>=leftPortionPageNumber && p<=rightPortionPageNumber).map(p => <span className={props.currentPage == p && s.selectPage} 
+		                         onClick={(e)=>props.onPageChanged(p)}>{" "+p}</span>)}
+		{portionNumber<portionCounter &&
+        <button onClick={()=> setPortionNumber(portionNumber+1)}>{">>"}</button>}
+         </div>
+         
        {
             props.users.map(u => <div key={u.id}>
                 <span>
@@ -36,6 +48,7 @@ let Users = (props) => {
                       <img src={u.photos.small != null ? u.photos.small : userPhoto}
                              className={s.userPhoto}/>
                        </NavLink>
+                       
                         {u.followed
                             ? <button disabled={props.followinginProgress.some( id => id === u.id)} onClick={() => {
                               props.unfollow(u.id);    
@@ -47,14 +60,17 @@ let Users = (props) => {
 
                     </div>
                 </span>
+                
                 <span>
                     <span>
                         <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
                 </span>
+                
             </div>)
         }
+        
 	   </div>
 
 }
