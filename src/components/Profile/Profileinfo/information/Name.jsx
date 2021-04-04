@@ -7,7 +7,7 @@ const Name =(props) => {
   console.log('prrops ',props);
 return(
   <div >
-     <div >{props.autorizatedUserID}</div>
+     <div >{props.fullName}</div>
      <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
   </div>   
 )

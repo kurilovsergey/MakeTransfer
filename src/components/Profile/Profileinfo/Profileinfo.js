@@ -10,7 +10,7 @@ const Profileinfo =(props) => {
 return (
       <div className={s.content}>
         <Avatar profile={props.profile} />
-        <Name name='cr7' autorizatedUserID={props.autorizatedUserID} status={props.status} updateStatus={props.updateStatus} updateStatus={props.updateStatus}/>
+        <Name fullName={props.fullName} autorizatedUserID={props.autorizatedUserID} status={props.status} updateStatus={props.updateStatus} updateStatus={props.updateStatus}/>
         <Statistic />
         <Club />
       </div>
