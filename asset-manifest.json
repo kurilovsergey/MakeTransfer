@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/MakeTransferPage/static/css/main.72d3d9bf.chunk.css",
+    "main.js": "/MakeTransferPage/static/js/main.8981c4dd.chunk.js",
+    "main.js.map": "/MakeTransferPage/static/js/main.8981c4dd.chunk.js.map",
+    "runtime-main.js": "/MakeTransferPage/static/js/runtime-main.f3506712.js",
+    "runtime-main.js.map": "/MakeTransferPage/static/js/runtime-main.f3506712.js.map",
+    "static/js/2.bca80aa9.chunk.js": "/MakeTransferPage/static/js/2.bca80aa9.chunk.js",
+    "static/js/2.bca80aa9.chunk.js.map": "/MakeTransferPage/static/js/2.bca80aa9.chunk.js.map",
+    "static/css/3.f78ef929.chunk.css": "/MakeTransferPage/static/css/3.f78ef929.chunk.css",
+    "static/js/3.57ddb0f9.chunk.js": "/MakeTransferPage/static/js/3.57ddb0f9.chunk.js",
+    "static/js/3.57ddb0f9.chunk.js.map": "/MakeTransferPage/static/js/3.57ddb0f9.chunk.js.map",
+    "static/css/4.e1b6abf6.chunk.css": "/MakeTransferPage/static/css/4.e1b6abf6.chunk.css",
+    "static/js/4.f19f3356.chunk.js": "/MakeTransferPage/static/js/4.f19f3356.chunk.js",
+    "static/js/4.f19f3356.chunk.js.map": "/MakeTransferPage/static/js/4.f19f3356.chunk.js.map",
+    "index.html": "/MakeTransferPage/index.html",
+    "static/css/3.f78ef929.chunk.css.map": "/MakeTransferPage/static/css/3.f78ef929.chunk.css.map",
+    "static/css/4.e1b6abf6.chunk.css.map": "/MakeTransferPage/static/css/4.e1b6abf6.chunk.css.map",
+    "static/css/main.72d3d9bf.chunk.css.map": "/MakeTransferPage/static/css/main.72d3d9bf.chunk.css.map",
+    "static/js/2.bca80aa9.chunk.js.LICENSE.txt": "/MakeTransferPage/static/js/2.bca80aa9.chunk.js.LICENSE.txt",
+    "static/media/preloader.961e76d8.svg": "/MakeTransferPage/static/media/preloader.961e76d8.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f3506712.js",
+    "static/js/2.bca80aa9.chunk.js",
+    "static/css/main.72d3d9bf.chunk.css",
+    "static/js/main.8981c4dd.chunk.js"
+  ]
+}
