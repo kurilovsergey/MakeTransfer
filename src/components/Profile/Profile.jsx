@@ -8,7 +8,7 @@ const Profile = (props) => {
   console.log('prf ',props.profile);
   return (
     <div className={s.content}>
-      <Profileinfo autorizatedUserID={props.autorizatedUserID} fullName={props.fullName} profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
+      <Profileinfo savePhoto={props.savePhoto} isowner={props.isowner} autorizatedUserID={props.autorizatedUserID} fullName={props.fullName} profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
       <MyPostsContainer store={props.store} />
     </div>
   )

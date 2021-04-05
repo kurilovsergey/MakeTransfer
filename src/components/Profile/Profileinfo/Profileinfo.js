@@ -6,10 +6,10 @@ import Club from './information/Club';
 import Name from './information/Name';
 
 const Profileinfo =(props) => {
-  
+  console.log("prifle-info, ",props);
 return (
       <div className={s.content}>
-        <Avatar profile={props.profile} />
+        <Avatar isowner={props.isowner} profile={props.profile} savePhoto={props.savePhoto}/>
         <Name fullName={props.fullName} autorizatedUserID={props.autorizatedUserID} status={props.status} updateStatus={props.updateStatus} updateStatus={props.updateStatus}/>
         <Statistic />
         <Club />
