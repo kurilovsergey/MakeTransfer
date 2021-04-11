@@ -97,7 +97,9 @@ export let updateStatus = (status) => async (dispatch) => {
     };
 
 export let getUserProfile = (userId) => async (dispatch) => {
+  console.log("tut")
     let response = await ProfileAPI.getProfile(userId)
+    console.log("запрос профиля ",response)
       dispatch(setuserprofile(response.data));
   };
 
@@ -110,7 +112,13 @@ export let savePhoto = (file) => async (dispatch) => {
   };
 
   
-  
+  export let saveProfile = (profile, userId) => async (dispatch) => {
+    let response = await ProfileAPI.saveProfile(profile)
+    console.log("userid ",userId)
+    response = await ProfileAPI.getProfile(userId)
+    console.log("запрос профиля ",response)
+      dispatch(setuserprofile(response.data));
+  };
 
 
 export default profile_reducer;

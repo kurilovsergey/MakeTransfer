@@ -4,7 +4,7 @@ import Preloader from '../../../common/Preloader/Preloader'
 import userPhoto from '../../../../assets/images/userPhoto.png'
 
 const Avatar =(props) => {
-  console.log("prifle-info, ",props);
+  
 
   if (!props.profile) {
     return <Preloader/>

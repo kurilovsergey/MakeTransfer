@@ -14,3 +14,6 @@ export const getisAuth= (state) => {
     return state.Auth.isAuth;
 };
 
+export const getfullName = (state) => {
+    return state.Wallpage.profile.fullName
+}

@@ -4,7 +4,8 @@ let initialstate = {
     messageData: [
         {id: 1, message: "What your club?"},
         {id: 2, message: "I see your vidio?"},
-        {id: 3, message: "I find club"}
+        {id: 3, message: "I find club"},
+        {id: 4, message: "Nerchinsk message"}
     ],
     dialogData: [
         {id: 1, name: 'Player1'},

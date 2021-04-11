@@ -4,11 +4,11 @@ import ProfileStatus from './ProfileStatus.jsx'
 import ProfileStatusWithHook from './ProfileStatusWithHook'
 
 const Name =(props) => {
-  console.log('prrops ',props);
+  console.log('name ',props);
 return(
   <div >
-     <div >{props.fullName}</div>
-     <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+     <div >{props.profile.fullName}</div>
+     <ProfileStatusWithHook status={props.status} updateStatus={props.updateStatus}/>
   </div>   
 )
 }
