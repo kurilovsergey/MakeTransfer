@@ -18,8 +18,8 @@ return (
       <div className={s.content}>
         <Avatar isowner={props.isowner} profile={props.profile} savePhoto={props.savePhoto}/>
         <Name profile={props.profile}  autorizatedUserID={props.autorizatedUserID} status={props.status} updateStatus={props.updateStatus} updateStatus={props.updateStatus}/>
-        {editMode ? <ProfileDataForm setEditMode={setEditMode} saveProfile={props.saveProfile} isowner={props.isowner} profile={props.profile}/> 
-        : <ProfileData gotoEditMode={gotoEditMode} profile={props.profile}/>}
+        {editMode ? <ProfileDataForm messageError={props.messageError} setEditMode={setEditMode} saveProfile={props.saveProfile} isowner={props.isowner} profile={props.profile}/> 
+        : <ProfileData  gotoEditMode={gotoEditMode} profile={props.profile}/>}
         <Club />
       </div>
 )

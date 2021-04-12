@@ -7,7 +7,7 @@ import {withRouter} from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import {WithAuthRedirect} from '../../components/../hoc/hoc'
 import { compose } from 'redux';
-import {getProfile, getStatusProfile, getAutorizatedUserID, getisAuth} from '../../redux/selectors/user/usersselectors'
+import {getProfile, getStatusProfile, getAutorizatedUserID, getisAuth, getMessageError} from '../../redux/selectors/user/usersselectors'
 import Preloader from '../common/Preloader/Preloader.jsx';
 
 
@@ -40,7 +40,7 @@ class ProfileContainer extends React.Component {
   
 
   render() {
-    console.log('1 ',this.props);
+    
       return(
         this.props.profile ?
           <Profile {...this.props} 
@@ -50,6 +50,7 @@ class ProfileContainer extends React.Component {
                     updateStatus={this.props.updateStatus}
                     isowner={!!this.props.match.params.userId}
                     savePhoto={this.props.savePhoto}
+                    messageError={this.props.messageError}
                     />
                     : <Preloader/>
       ) 
@@ -61,7 +62,8 @@ let mapStateToProps = (state) => ({
 profile: getProfile(state),
 status: getStatusProfile(state),
 autorizatedUserID: getAutorizatedUserID(state),
-isAuth: getisAuth(state)
+isAuth: getisAuth(state),
+messageError: getMessageError(state)
 });
 
 /*

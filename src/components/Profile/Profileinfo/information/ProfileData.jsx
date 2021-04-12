@@ -3,7 +3,7 @@ import { object } from 'yup/lib/locale';
 import s from './Statistic.module.css';
 
 const ProfileData =(props) => {
-  console.log('5 ',props.profile);
+  
 return (
   <div className={s.statistic}>
    <div className={s.statinseason}>
@@ -23,6 +23,7 @@ return (
              contaceValue={props.profile.contacts[key]} key={key}/>}
    )}</div>
    </div>
+   
   </div>   
 )
 }
@@ -30,7 +31,7 @@ return (
 export default ProfileData;
 
 const Contact = ({contactTitle, contaceValue}) => {
-  console.log(contactTitle, contaceValue)
+  
   return (
   <div>
     <b>{contactTitle}</b>{contaceValue || " Нет"}

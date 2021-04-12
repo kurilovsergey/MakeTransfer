@@ -6,6 +6,7 @@ const ADD_POST = "ADD_POST";
 const UPDATE_NEWPOSTTEXT = "UPDATE_NEW_POST_TEXT";
 const SET_USER_PROFILE = "SETUSERPROFILE";
 const SET_STATUS = "SET_STATUS";
+const SET_RESPONSE_UPDATEPROFILE_ERROR = "SET_RESPONSE_UPDATEPROFILE_ERROR"
 
 
 let initialstate = {
@@ -15,7 +16,8 @@ let initialstate = {
   ],
   newposttext: 'type text',
   profile: null,
-  status: ""
+  status: "",
+  messageError: ""
 };
 
 const profile_reducer = (state = initialstate, action) => {
@@ -44,6 +46,13 @@ const profile_reducer = (state = initialstate, action) => {
 
   case SAVE_PHOTO_SUCCES: {
     return {...state, profile: {...state.profile, photos: action.photos}}
+  }
+
+  case SET_RESPONSE_UPDATEPROFILE_ERROR: {
+    return {
+      ...state, 
+      messageError : action.messages
+    }
   }
 
   default:
@@ -83,6 +92,9 @@ export const savePhotoSucces  = (photos) => {
  }
 }
 
+export const setResponseUpdateProfileErrorMessage = (messages) => (
+  {type: SET_RESPONSE_UPDATEPROFILE_ERROR, messages})
+
 export let getStatus = (userId) => async (dispatch) => {
     let response = await ProfileAPI.getStatus(userId)
       dispatch(setStatus(response.data));
@@ -114,11 +126,16 @@ export let savePhoto = (file) => async (dispatch) => {
   
   export let saveProfile = (profile, userId) => async (dispatch) => {
     let response = await ProfileAPI.saveProfile(profile)
-    console.log("userid ",userId)
+    if (response.data.resultCode===0) {
+      console.log("ответ ",response)
     response = await ProfileAPI.getProfile(userId)
     console.log("запрос профиля ",response)
       dispatch(setuserprofile(response.data));
-  };
+      dispatch(setResponseUpdateProfileErrorMessage(response.data.messages))
+  } else {
+    dispatch(setResponseUpdateProfileErrorMessage(response.data.messages[0]))
+  }
+}
 
 
 export default profile_reducer;

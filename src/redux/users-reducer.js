@@ -16,7 +16,8 @@ let initialstate = {
   totalUsersCount: 0,
   currentPage: 1,
   isFetching: false,
-  followinginProgress: [1]
+  followinginProgress: [1],
+  textErrorsUpdateProfile: ""
 };
 
 const users_reducer = (state = initialstate, action) => {
@@ -104,9 +105,11 @@ export const unfollow = (userID) => {
     return async (dispatch) => {
         dispatch(toggleisFollowinginProgress(true, userID));
         let response = await UsersAPI.unfollow(userID)
-            if (response.data.resultCode==0) {dispatch(unfollowSuccess(userID))}
+            if (response.data.resultCode==0) {{dispatch(unfollowSuccess(userID))}
             dispatch(toggleisFollowinginProgress(false, userID));
-    }
+    } 
+}
+
 };
 
  

@@ -17,3 +17,7 @@ export const getisAuth= (state) => {
 export const getfullName = (state) => {
     return state.Wallpage.profile.fullName
 }
+
+export const getMessageError = (state) => {
+    return state.Wallpage.messageError
+}

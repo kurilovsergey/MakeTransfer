@@ -13,6 +13,8 @@ const SignupSchema = Yup.object().shape({
 
 const ProfileDataForm =(props) => {
   console.log('profile form ',props)
+  if (typeof props.messageError === 'undefined') {
+    props.setEditMode(false)}
 return (
   <div className={s.statistic}>
    <div className={s.statinseason}>
@@ -31,10 +33,13 @@ return (
         //validationSchema={SignupSchema}xwz
         
         onSubmit={values => {
-          //alert(JSON.stringify(values, null, 2));
-          console.log(values);
+          alert(JSON.stringify(values, null, 2));
+          console.log('me', props.messageError);
           props.saveProfile(values, props.profile.userId)
-          props.setEditMode(false);
+
+          //if (props.messageError) {actions.setErrors({ error: 'Unable to login with the provided credentials.'})};
+          //props.messageError ? 
+          //props.setEditMode(false) : null
         }}
       >
         {({ errors, touched }) => (
@@ -55,7 +60,15 @@ return (
             <div>Мои проф скилы</div>
             <Field component="textarea" name="lookingForAJobDescription"  placeholder="My prof skills"  id="lookingForAJobDescription"/>
             </div>
+            <div><b>Контакты:</b> {Object.keys(props.profile.contacts).map(key=> {
+     return <Contact contactTitle={key} 
+             contaceValue={props.profile.contacts[key]} key={key}/>}
+   )}</div>
             <button type="submit">Save</button>
+            {props.messageError ? (
+            <div>{props.messageError}</div>
+          ) : null}
+            
           </Form>
         )}
       </Formik>
@@ -68,10 +81,10 @@ return (
 export default ProfileDataForm;
 
 const Contact = ({contactTitle, contaceValue}) => {
-  console.log(contactTitle, contaceValue)
+  
   return (
   <div>
-    <b>{contactTitle}</b>{contaceValue || " Нет"}
+    <Field name={"contacts."+ contactTitle}  placeholder={contactTitle}  id={contactTitle}/>
  </div>
   )
 };
