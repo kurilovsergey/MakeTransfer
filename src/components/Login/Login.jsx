@@ -9,18 +9,20 @@ import { Redirect } from "react-router"
 
 
 const Login = (props) => {
+  console.log('login',props);
   if (props.isAuth) {
     return <Redirect to={"/profile"}/>
   }
     return   <div>
-        <LoginForm login={props.login} messages={props.messages}/>
+        <LoginForm login={props.login} messages={props.messages} captchaUrl={props.captchaUrl}/>
       </div>
     
 }
 
 let mapStateToProps = (state) => ({
   isAuth: state.Auth.isAuth,
-  messages: state.Auth.messages
+  messages: state.Auth.messages,
+  captchaUrl: state.Auth.captchaUrl
   });
 
 export default connect(mapStateToProps, {login})(Login);
@@ -41,17 +43,20 @@ export const LoginForm = (props) => (
       initialValues={{
         email: '',
         password: '',
+        captcha: '',
         rememberme: [],
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, actions) => {
+        
        //alert(JSON.stringify(values, null, 2));
-       props.login(values.email,values.password,true);
+       props.login(values.email,values.password, true , values.captcha);
        if (props.messages) {actions.setErrors({ error: 'Unable to login with the provided credentials.'})};
       }}
     >
       {({ errors, touched }) => (
         <Form>
+          
          <Field name="email" type="email" placeholder="email"/>
           {errors.email && touched.email ? <div>{errors.email}</div> : null}
 
@@ -60,10 +65,13 @@ export const LoginForm = (props) => (
             <div>{errors.password}</div>
           ) : null}
 
-          {props.messages ? (
-            <div>{props.messages}</div>
-          ) : null}
 
+          {props.captchaUrl ?
+          <>
+           <img src={props.captchaUrl} /> 
+           <Field name="captcha" placeholder="captcha"/>
+          </>
+          : null}
           <label>
              <Field type="checkbox" name="rememberme" value="true" />
              Remember me
