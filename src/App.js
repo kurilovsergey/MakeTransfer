@@ -4,7 +4,7 @@ import HeaderContainer from './components/Header/HeaderContainer.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 //import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
-import {BrowserRouter, HashRouter, Route, withRouter} from 'react-router-dom'
+import {BrowserRouter, HashRouter, Route, Switch, withRouter} from 'react-router-dom'
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Login from '././components/Login/Login'
 import {connect} from 'react-redux';
@@ -35,10 +35,13 @@ render() {
       <HeaderContainer />
       <Navbar />
       <div className='app-wrapper-content'>
+        <Switch>
         <Route path='/dialogs' render= {WithSuspence(DialogsContainer)}/>
         <Route path='/profile/:userId?' render= {WithSuspence(ProfileContainer)} />
         <Route path='/users' render= {()=><UsersContainer/>} />
         <Route path='/login' render= {()=><Login/>} />
+        <Route path='*' render= {()=><>404 not found</>} />
+        </Switch>
       </div>
       </div>
       </BrowserRouter>
