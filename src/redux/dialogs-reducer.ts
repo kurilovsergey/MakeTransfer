@@ -1,20 +1,33 @@
+import { string } from "yup/lib/locale";
+
 const SEND_MESSAGE = "SEND MESSAGE";
 
+type DialogType = {
+    id: number,
+    name: string
+}
+
+type MessageType = {
+    id: number,
+    message: string
+}
+
 let initialstate = {
-    messageData: [
+    messageData : [
         {id: 1, message: "What your club?"},
         {id: 2, message: "I see your vidio?"},
-        {id: 3, message: "I find club"},
-        {id: 4, message: "Nerchinsk message"}
-    ],
+        {id: 3, message: "I find club"}
+    ] as Array<MessageType>,
     dialogData: [
         {id: 1, name: 'Player1'},
         {id: 2, name: 'Coach'},
         {id: 3, name: 'Agent1'}
-         ]
+         ] as Array<DialogType>
 };
 
-export const dialog_reducer = (state=initialstate, action) => {
+export type InitialstateType = typeof initialstate;
+
+export const dialog_reducer = (state: InitialstateType = initialstate, action: any) => {
     if (action.type === SEND_MESSAGE) {
       let body = action.newmessage;
       console.log('body ',body)
@@ -23,7 +36,12 @@ export const dialog_reducer = (state=initialstate, action) => {
     return state;
 };
 
-export let sendmessage  = (newmessage) => {
+type sendmessageType = {
+    type: typeof SEND_MESSAGE,
+    newmessage: string
+}
+
+export let sendmessage  = (newmessage: string): sendmessageType => {
     return {
        type: SEND_MESSAGE,
        newmessage
