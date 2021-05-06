@@ -7,6 +7,10 @@
   font-weight: bold;
 }
 
+.regularPage{
+ font-weight:normal
+}
+
 .userPhoto {
   width: 100px;
  height: 100px;

@@ -23,6 +23,7 @@ let initialstate = {
   textErrorsUpdateProfile: ""
 };
 
+
 type InitialstateType = typeof initialstate;
 
 const users_reducer = (state = initialstate, action: any): InitialstateType => {
@@ -96,7 +97,7 @@ default:
 
  export let toggleisFetching = (isFetching: boolean): ToggleisFetchingType => ({type: TOGGLE_IS_FETCHING, isFetching })
 
- type ToggleisFollowinginProgressType = ({type: typeof TOGGLE_IS_FOLLOWING_PROGRESS, isFetching: number, userID: number })
+ type ToggleisFollowinginProgressType = ({type: typeof TOGGLE_IS_FOLLOWING_PROGRESS, isFetching: boolean, userID: number })
  
  export let toggleisFollowinginProgress = (isFetching: boolean, userID: number): ToggleisFollowinginProgressType => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userID })
 

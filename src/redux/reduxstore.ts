@@ -7,7 +7,7 @@ import Auth_reducer from './Auth-reducer';
 import App_reducer from './app-reducer';
 
 
-let reducers = combineReducers({
+let RootReducers = combineReducers({
     Wallpage: profile_reducer,
     Messagepage: dialog_reducer,
     usersPage: users_reducer,
@@ -15,12 +15,16 @@ let reducers = combineReducers({
     App: App_reducer,
 });
 
+type RootReducerType = typeof RootReducers;
+
+export type AppStateType = ReturnType<RootReducerType>
+
+//@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, /* preloadedState, */ composeEnhancers(
+const store = createStore(RootReducers, /* preloadedState, */ composeEnhancers(
     applyMiddleware(thunkMiddleware)
   ));
-
-
+  
 //let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export default store;

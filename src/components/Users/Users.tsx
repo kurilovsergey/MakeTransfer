@@ -1,18 +1,30 @@
-import React, { useImperativeHandle } from 'react';
+import React, { useImperativeHandle, useState, useEffect } from 'react';
 import s from './Users.module.css';
-import {useState, useEffect} from 'react';
 import * as axios from 'axios';
 import {NavLink} from "react-router-dom";
 import userPhoto from '../../assets/images/userPhoto.png'
 import { UsersAPI } from '../../api/api';
 import { follow } from '../../redux/users-reducer';
+import {UserType} from '../../types/types'
+
+type PropsType = {
+    onPageChanged: (pageNumber: number) => void 
+    users: Array<UserType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching?: boolean
+    followinginProgress: Array<number>
+    follow: (userID: number) => void
+    unfollow: (userID: number) => void
+}
 
 
-let Users = (props) => {
+let Users: React.FC<PropsType> = (props) => {
 
 	let pagesCount = Math.ceil(props.totalUsersCount/props.pageSize);
 
-	let pages = [];
+	let pages: Array<number> = [];
 
 	for (let i=1; i<=pagesCount; i++) {
 		pages.push(i);
@@ -28,13 +40,12 @@ let Users = (props) => {
     let rightPortionPageNumber = portionNumber * portionSize;
 
 	return <div>
-        
-       
-
          <div>
         {portionNumber>1 &&
          <button onClick={()=> setPortionNumber(portionNumber-1)}>{"<<"}</button>}
-           {pages.filter(p=> p>=leftPortionPageNumber && p<=rightPortionPageNumber).map(p => <span className={props.currentPage == p && s.selectPage} 
+           {pages.filter(p=> p>=leftPortionPageNumber && p<=rightPortionPageNumber).map(p =>
+         //   <span className={props.currentPage == p && s.selectPage} 
+         <span className={  props.currentPage == p ? s.selectPage : s.regularPage} 
 		                         onClick={(e)=>props.onPageChanged(p)}>{" "+p}</span>)}
 		{portionNumber<portionCounter &&
         <button onClick={()=> setPortionNumber(portionNumber+1)}>{">>"}</button>}

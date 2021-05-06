@@ -38,7 +38,7 @@ render() {
         <Switch>
         <Route path='/dialogs' render= {WithSuspence(DialogsContainer)}/>
         <Route path='/profile/:userId?' render= {WithSuspence(ProfileContainer)} />
-        <Route path='/users' render= {()=><UsersContainer/>} />
+        <Route path='/users' render= {()=><UsersContainer />} />
         <Route path='/login' render= {()=><Login/>} />
         <Route path='*' render= {()=><>404 not found</>} />
         </Switch>
