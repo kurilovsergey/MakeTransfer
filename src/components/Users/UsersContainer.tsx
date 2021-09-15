@@ -26,7 +26,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    onPageChanged: (pageNumber: number) => void 
+    //onPageChanged: (pageNumber: number) => void 
     follow: (userID: number) => void
     unfollow: (userID: number) => void
     getUsers: (currentPage: number, pageSize: number) => void
@@ -36,16 +36,12 @@ type PropType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
 
 class UsersContainer extends React.Component<PropType> {
 	
-    
-
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
-            
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);         
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize);
-        
+        this.props.getUsers(pageNumber, this.props.pageSize);  
     }
   
 render() {
@@ -70,7 +66,7 @@ return <>
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        users: state.usersPage.users,
+        users: state.usersPage.users, 
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
@@ -80,14 +76,12 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
+
+
 //<TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, TOwnProps = DefaultState>
-export default compose(connect<MapStateToPropsType, MapDispatchToPropsType, AppStateType>(
+export default compose(connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(
     mapStateToProps, {follow, unfollow, getUsers}),
     WithAuthRedirect)(UsersContainer)
-
-
-
-
-    
+  
 //connect(mapStateToProps,  
   //          {follow, unfollow, setCurrentPage, setCurrentPage, toggleisFollowinginProgress, getUsers})(UsersContainer);
