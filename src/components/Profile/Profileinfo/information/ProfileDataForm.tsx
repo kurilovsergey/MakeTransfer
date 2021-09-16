@@ -3,6 +3,7 @@ import { object } from 'yup/lib/locale';
 import s from './Statistic.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { ProfileType } from '../../../../types/types';
 
 const SignupSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -11,10 +12,28 @@ const SignupSchema = Yup.object().shape({
     .required('Required')
 });
 
-const ProfileDataForm =(props) => {
-  console.log('profile form ',props)
+type ValueType = {
+  fullname?: string,
+  aboutMe?: string,
+  lookingForAJob?: boolean,
+  lookingForAJobDescription?: string
+}
+
+type PropsType = {
+  messageError: string,
+  profile: ProfileType,
+  gotoEditMode: () => void
+  saveProfile: (values: ValueType, userId: number) => void,
+  resetMessageError: () => void
+}
+
+const ProfileDataForm: React.FC<PropsType> = (props) => {
+  
   if (typeof props.messageError === 'undefined') {
-    props.setEditMode(false)}
+    console.log('tut');
+    props.resetMessageError();
+    props.gotoEditMode();    
+  }
 return (
   <div className={s.statistic}>
    <div className={s.statinseason}>
@@ -34,12 +53,7 @@ return (
         
         onSubmit={values => {
           alert(JSON.stringify(values, null, 2));
-          console.log('me', props.messageError);
           props.saveProfile(values, props.profile.userId)
-
-          //if (props.messageError) {actions.setErrors({ error: 'Unable to login with the provided credentials.'})};
-          //props.messageError ? 
-          //props.setEditMode(false) : null
         }}
       >
         {({ errors, touched }) => (
@@ -62,7 +76,7 @@ return (
             </div>
             <div><b>Контакты:</b> {Object.keys(props.profile.contacts).map(key=> {
      return <Contact contactTitle={key} 
-             contaceValue={props.profile.contacts[key]} key={key}/>}
+             contactValue={props.profile.contacts[key as keyof typeof props.profile.contacts]} key={key}/>}
    )}</div>
             <button type="submit">Save</button>
             {props.messageError ? (
@@ -79,8 +93,14 @@ return (
 }
 
 export default ProfileDataForm;
+//: React.FC<PropsType> = (props) =>
 
-const Contact = ({contactTitle, contaceValue}) => {
+type PropsTypeContact = {
+  contactTitle: string,
+  contactValue: string
+}
+
+const Contact: React.FC<PropsTypeContact> = ({contactTitle, contactValue}) => {
   
   return (
   <div>

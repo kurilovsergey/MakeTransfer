@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 //import { ValidationSchemaExample } from '../../Login/Login';
 
-const MyPosts = (props) => {
+const MyPosts = (props) =>  {
   
   let newpostelement = React.createRef();
   
@@ -20,7 +20,7 @@ const MyPosts = (props) => {
   
 
 
-  let postElemements=props.postData.map(post=><Post message={post.message} />);
+  let postElemements=props.postData.map(post=><Post key={post} message={post.message} />);
  
   
   return (

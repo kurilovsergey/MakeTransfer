@@ -2,7 +2,7 @@ import React from 'react';
 import Profile from './Profile.jsx'
 import * as axios from 'axios';
 import {connect} from 'react-redux';
-import {getUserProfile, setuserprofile, updateStatus, getStatus, savePhoto, saveProfile} from '../../redux/profile-reducer';
+import {getUserProfile, setuserprofile, updateStatus, getStatus, savePhoto, saveProfile, resetMessageError} from '../../redux/profile-reducer';
 import {withRouter} from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import {WithAuthRedirect} from '../../components/../hoc/hoc'
@@ -51,6 +51,7 @@ class ProfileContainer extends React.Component {
                     isowner={!!this.props.match.params.userId}
                     savePhoto={this.props.savePhoto}
                     messageError={this.props.messageError}
+                    resetMessageError={this.props.resetMessageError}
                     />
                     : <Preloader/>
       ) 
@@ -76,7 +77,7 @@ let mapStateToProps = (state) => ({
 */
 
 export default compose(
-    connect(mapStateToProps, {setuserprofile, getUserProfile, updateStatus, getStatus, savePhoto, saveProfile}),
+    connect(mapStateToProps, {setuserprofile, getUserProfile, updateStatus, getStatus, savePhoto, saveProfile, resetMessageError}),
     withRouter,
     WithAuthRedirect
 )(ProfileContainer)

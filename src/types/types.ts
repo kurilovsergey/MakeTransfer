@@ -5,6 +5,8 @@ export type PostType = {
     message: String
     likes: number
   }
+
+  
   
   export type ProfileType = {
     userId : number
@@ -12,7 +14,8 @@ export type PostType = {
     lookingForAJobDescription: string
     fullName: string
     contacts: ContactsType
-    photos: PhotosType
+    photos: PhotosType,
+    aboutMe: string
   }
   
   export type ContactsType =  {

@@ -6,7 +6,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "final-form": "^4.20.2",
-    "formik": "^2.2.6",
+    "formik": "^2.2.9",
     "npm-check-updates": "^11.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

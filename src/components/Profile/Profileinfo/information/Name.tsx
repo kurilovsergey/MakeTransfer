@@ -1,10 +1,18 @@
 import React from 'react';
+import { string } from 'yup';
 import s from './Name.module.css';
 import ProfileStatus from './ProfileStatus.jsx'
 import ProfileStatusWithHook from './ProfileStatusWithHook'
+import {ProfileType} from '../../../../types/types'
 
-const Name =(props) => {
-  console.log('name ',props);
+type PropsType = {
+   profile: ProfileType
+   status: string,
+   updateStatus: (status: string) => void
+};
+
+const Name: React.FC<PropsType> = (props) => {
+  
 return(
   <div >
      <div >{props.profile.fullName}</div>

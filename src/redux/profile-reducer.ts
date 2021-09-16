@@ -93,7 +93,7 @@ type SetStatusType = {
 }
 
 
-export const setStatus  = (status: string):SetStatusType  => {
+export const setStatus  = (status: string): SetStatusType  => {
   return {
    type: SET_STATUS,
    status
@@ -155,6 +155,10 @@ export let savePhoto = (file: any) => async (dispatch: any) => {
   } else {
     dispatch(setResponseUpdateProfileErrorMessage(response.data.messages[0]))
   }
+}
+
+export let resetMessageError = () => async (dispatch: any) => {
+  dispatch(setResponseUpdateProfileErrorMessage(""));
 }
 
 
