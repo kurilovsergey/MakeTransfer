@@ -1,5 +1,5 @@
 import React from 'react';
-import Profile from './Profile.jsx'
+import Profile from './Profile.tsx'
 import * as axios from 'axios';
 import {connect} from 'react-redux';
 import {getUserProfile, setuserprofile, updateStatus, getStatus, savePhoto, saveProfile, resetMessageError} from '../../redux/profile-reducer';

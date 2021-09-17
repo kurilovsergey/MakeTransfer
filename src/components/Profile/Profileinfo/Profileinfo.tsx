@@ -22,7 +22,6 @@ type PropsType = {
   updateStatus: (status: string) => void,
   messageError: string
   saveProfile: (values: ValueType, userId: number) => void
-  gotoEditMode: () => void,
   resetMessageError: () => void
   
 }
