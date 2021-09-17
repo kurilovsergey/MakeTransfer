@@ -7,14 +7,15 @@ import s from './Statistic.module.css';
 type PropsType = {
   isowner: boolean,
   gotoEditMode: () => void,
-  profile: ProfileType
-
+  profile: ProfileType | null
 }
 
 
 
 const ProfileData: React.FC<PropsType> = (props) => {
-  //console.log('contacts ',props.profile.contacts)
+  console.log('isowner ',props.isowner)
+
+
 return (
   <div className={s.statistic}>
    <div className={s.statinseason}>
@@ -24,14 +25,14 @@ return (
    </div>
    <div className={s.headinfo}>
    {props.isowner || <button onClick={()=>props.gotoEditMode()}>Редактировать</button>}
-   <div>Обо мне: {props.profile.aboutMe || "Нет информации"}</div>
-   <div>Ищу клуб:{props.profile.lookingForAJob ? " Да" : " Нет"}</div>
-   {props.profile.lookingForAJobDescription && 
-     <div>Мои скилы :{props.profile.lookingForAJobDescription}</div>
+   <div>Обо мне: {props.profile?.aboutMe || "Нет информации"}</div>
+   <div>Ищу клуб:{props.profile?.lookingForAJob ? " Да" : " Нет"}</div>
+   {props.profile!.lookingForAJobDescription && 
+     <div>Мои скилы :{props.profile!.lookingForAJobDescription}</div>
    }
-   <div><b>Контакты:</b> {Object.keys(props.profile.contacts).map(key=> {
+   <div><b>Контакты:</b> {Object.keys(props.profile!.contacts).map(key=> {
      return <Contact contactTitle={key} 
-             contaceValue={props.profile.contacts[key as keyof typeof props.profile.contacts]} key={key}/>}
+             contaceValue={props.profile?.contacts[key as keyof ContactsType]} key={key}/>}
    )}</div>
    </div>
    
@@ -43,7 +44,7 @@ export default ProfileData;
 
 type ContactPropsType = {
   contactTitle: string,
-  contaceValue: string
+  contaceValue: string | undefined
 }
 
 const Contact: React.FC<ContactPropsType> = (props) => {

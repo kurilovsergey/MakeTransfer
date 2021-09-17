@@ -13,23 +13,25 @@ type ValueType = {
 
 type ProfileComponentType = {
   isowner: boolean,
-  profile: ProfileType,
-  savePhoto: () => void,
+  profile: ProfileType | null,
+  savePhoto: (e: File) => void,
   status: string,
   updateStatus: (status: string) => void,
   messageError: string
-  saveProfile: (values: ValueType, userId: number) => void
-  gotoEditMode: () => void,
+  saveProfile: (values: ValueType, userId: number) => void,
   resetMessageError: () => void,
 }
 
 const Profile: React.FC<ProfileComponentType> = (props) => {
-  
+  console.log('propsfile= ')
   return (
+   
+    
     <div className={s.content}>
       <Profileinfo messageError={props.messageError} saveProfile={props.saveProfile} resetMessageError={props.resetMessageError} savePhoto={props.savePhoto} isowner={props.isowner} profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
       <MyPostsContainer />
     </div>
+    
   )
 }
 

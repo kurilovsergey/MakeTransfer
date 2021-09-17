@@ -3,7 +3,9 @@ import { object } from 'yup/lib/locale';
 import s from './Statistic.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { ProfileType } from '../../../../types/types';
+import { ProfileType, ContactsType } from '../../../../types/types';
+
+
 
 const SignupSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -21,7 +23,7 @@ type ValueType = {
 
 type PropsType = {
   messageError: string,
-  profile: ProfileType,
+  profile: ProfileType | null,
   gotoEditMode: () => void
   saveProfile: (values: ValueType, userId: number) => void,
   resetMessageError: () => void
@@ -34,6 +36,9 @@ const ProfileDataForm: React.FC<PropsType> = (props) => {
     props.resetMessageError();
     props.gotoEditMode();    
   }
+  
+
+
 return (
   <div className={s.statistic}>
    <div className={s.statinseason}>
@@ -44,16 +49,16 @@ return (
    <div className={s.headinfo}>
    <Formik
         initialValues={{
-          fullName: props.profile.fullName,
-          aboutMe: props.profile.aboutMe,
-          lookingForAJobDescription: props.profile.lookingForAJobDescription,
-          lookingForAJob: props.profile.lookingForAJob
+          fullName: props.profile!.fullName,
+          aboutMe: props.profile!.aboutMe,
+          lookingForAJobDescription: props.profile!.lookingForAJobDescription,
+          lookingForAJob: props.profile!.lookingForAJob
         }}
         //validationSchema={SignupSchema}xwz
         
         onSubmit={values => {
           alert(JSON.stringify(values, null, 2));
-          props.saveProfile(values, props.profile.userId)
+          props.saveProfile(values, props.profile!.userId)
         }}
       >
         {({ errors, touched }) => (
@@ -74,9 +79,9 @@ return (
             <div>Мои проф скилы</div>
             <Field component="textarea" name="lookingForAJobDescription"  placeholder="My prof skills"  id="lookingForAJobDescription"/>
             </div>
-            <div><b>Контакты:</b> {Object.keys(props.profile.contacts).map(key=> {
+            <div><b>Контакты:</b> {Object.keys(props.profile!.contacts).map(key=> {
      return <Contact contactTitle={key} 
-             contactValue={props.profile.contacts[key as keyof typeof props.profile.contacts]} key={key}/>}
+             contactValue={props.profile?.contacts[key as keyof ContactsType]} key={key}/>}
    )}</div>
             <button type="submit">Save</button>
             {props.messageError ? (
@@ -97,7 +102,7 @@ export default ProfileDataForm;
 
 type PropsTypeContact = {
   contactTitle: string,
-  contactValue: string
+  contactValue: string | undefined
 }
 
 const Contact: React.FC<PropsTypeContact> = ({contactTitle, contactValue}) => {

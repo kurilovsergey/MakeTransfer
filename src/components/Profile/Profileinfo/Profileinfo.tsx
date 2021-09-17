@@ -6,6 +6,8 @@ import ProfileDataForm from './information/ProfileDataForm';
 import Club from './information/Club';
 import Name from './information/Name';
 import {ProfileType} from '../../../types/types'
+import Preloader from '../../common/Preloader/Preloader';
+
 
 type ValueType = {
   fullname?: string,
@@ -16,8 +18,8 @@ type ValueType = {
 
 type PropsType = {
   isowner: boolean,
-  profile: ProfileType,
-  savePhoto: () => void,
+  profile: ProfileType | null,
+  savePhoto: (e: File) => void,
   status: string,
   updateStatus: (status: string) => void,
   messageError: string
@@ -34,6 +36,9 @@ const Profileinfo: React.FC<PropsType> = (props) =>  {
    console.log('editmode 1 ',editMode);
   }
 
+  if (!props.profile) {
+    return <Preloader/>
+}
 
   //console.log('edit ',editMode);
   

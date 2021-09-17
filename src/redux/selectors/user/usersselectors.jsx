@@ -1,3 +1,5 @@
+
+
 export const getProfile = (state) => {
  return state.Wallpage.profile;
 };
