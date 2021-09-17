@@ -2,7 +2,7 @@
 
 export type PostType = {
     id: number,
-    message: String
+    message: string
     likes: number
   }
 

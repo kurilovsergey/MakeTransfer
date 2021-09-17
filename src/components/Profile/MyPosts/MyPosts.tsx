@@ -1,26 +1,37 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {addpostactioncreator, updatenewposttext} from '../../../redux/profile-reducer';
+//import {addpostactioncreator, updatenewposttext} from '../../../redux/profile-reducer';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import {required} from '../../../utils/validators/validators'
 import * as Yup from 'yup';
+import { PostType } from '../../../types/types';
 
 //import { ValidationSchemaExample } from '../../Login/Login';
 
-const MyPosts = (props) =>  {
+export type MapPropType = {
+
+  postData: Array<PostType>
+}
+
+export type DispatchPropsType = {
+  addPost: (newPost: string) => void,
+  
+}
+
+const MyPosts:React.FC<MapPropType & DispatchPropsType> = (props) =>  {
   
   let newpostelement = React.createRef();
   
-  let addPost = (newPost) => {
+  let addPost = (newPost: string) => {
     //let text=newpostelement.current.value; 
     props.addPost(newPost);
 
   }
   
+ console.log('post props= ',props)
 
-
-  let postElemements=props.postData.map(post=><Post key={post} message={post.message} />);
+  let postElemements=props.postData.map(post=><Post key={post.id} likes={post.likes} message={post.message} />);
  
   
   return (
@@ -48,7 +59,11 @@ export default MyPosts;
       .required('Required')
   });
 
-   const AddNewPostForm = (props) => (
+  type AddNewPostFormType = {
+    addPost: (values: string) => void
+  }
+
+   const AddNewPostForm: React.FC<AddNewPostFormType> = (props) => (
     <div>
       <h1>New post</h1>
       <Formik

@@ -1,7 +1,12 @@
 import React from 'react';
 import s from './Post.module.css';
 
-const Post = (props) => {
+type PropType = {
+  message: string,
+  likes: number 
+}
+
+const Post: React.FC<PropType> = (props) => {
   return (
     <div className={s.item}>
       <img src='https://tmssl.akamaized.net//images/portrait/header/8198-1515761767.jpg?lm=1515761786' />
