@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import './App.css';
-import HeaderContainer from './components/Header/HeaderContainer.jsx';
+import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar.jsx';
 //import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
