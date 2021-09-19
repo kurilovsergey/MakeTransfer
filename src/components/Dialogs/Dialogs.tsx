@@ -1,31 +1,43 @@
 import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItems from './DialogItems/DialogItems';
-import Message from './Message/Message.jsx';
-import {sendmessage, updatemessage} from '../../redux/dialogs-reducer';
+import Message from './Message/Message.tsx';
+//import {sendmessage, updatemessage} from '../../redux/dialogs-reducer';
 import Login from '../Login/Login';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
+export type DialogType = {
+  id: number,
+  name: string
+}
 
+export type MessageType = {
+  id: number,
+  message: string
+}
 
+type Messagepage = {
+  Messagepage: {dialogData: Array<DialogType>,messageData: Array<MessageType>},
+  sendmessage: (newmessage: string) => void
+}
 
-const Dialogs = (props) => {
-
+const Dialogs: React.FC<Messagepage> = (props) => {
+console.log('dialog ', props)
 	let dialogElements = props.Messagepage.dialogData.map(dialog => <DialogItems name={dialog.name}
 		id={dialog.id} />);
 
 	let messagesElemets = props.Messagepage.messageData.map(message => <Message message={message.message} />);
 
-	let newmessagebody = props.Messagepage.newMessage;
+	/*let newmessagebody = props.Messagepage.newMessage;
 
 	let onSendMessage = () => {
 		props.sendMessage();
 	};
+*/
 
-
-   let addNewMessage = (newmessage) => {
-	   props.sendMessage(newmessage);
+   let addNewMessage = (newmessage: string) => {
+	   props.sendmessage(newmessage);
    }
 
 	return (
@@ -52,7 +64,11 @@ export default Dialogs;
       .required('Required')
   });
 
-   const AddMessageForm = (props) => (
+  type AddMessageFormType = {
+    addNewMessage: (newmessage: string) => void
+  }
+
+   const AddMessageForm: React.FC<AddMessageFormType> = (props) => (
     <div>
       <h1>New Message</h1>
       <Formik

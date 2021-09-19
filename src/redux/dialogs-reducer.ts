@@ -2,12 +2,12 @@ import { string } from "yup/lib/locale";
 
 const SEND_MESSAGE = "SEND MESSAGE";
 
-type DialogType = {
+export type DialogType = {
     id: number,
     name: string
 }
 
-type MessageType = {
+export type MessageType = {
     id: number,
     message: string
 }
