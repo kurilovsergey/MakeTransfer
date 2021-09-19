@@ -17,11 +17,8 @@ const mapStateToProps = (state: AppStateType) => {
 }
 
 type mapDispatchTooPropsType = {
-	sendMessage: (newmessage: string) => void
+	sendmessage: (newmessage: string) => void
 }
-
-
-
 
 
 /*
@@ -31,7 +28,6 @@ const mapDispatchTooProps = (dispatch) => {
 }
 }
 */
-
 
 //let AuthRedirectComponent = WithAuthRedirect(Dialogs);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItems from './DialogItems/DialogItems';
-import Message from './Message/Message.tsx';
+import Message from './Message/Message';
 //import {sendmessage, updatemessage} from '../../redux/dialogs-reducer';
 import Login from '../Login/Login';
 import { Formik, Form, Field, ErrorMessage } from 'formik';

@@ -6,9 +6,16 @@ import * as Yup from 'yup';
 import { login, setResponseLoginErrorMessage } from '../../redux/Auth-reducer';
 import { compose } from 'redux';
 import { Redirect } from "react-router"
+import { AppStateType } from '../../redux/reduxstore';
 
+type LoginType = {
+  isAuth: boolean,
+  messages: string | null,
+  captchaUrl: string | null,
+  login: (email: string , password: string, rememberme: boolean , captcha: string) => void
+}
 
-const Login = (props) => {
+const Login: React.FC<LoginType> = (props) => {
   console.log('login',props);
   if (props.isAuth) {
     return <Redirect to={"/profile"}/>
@@ -18,14 +25,21 @@ const Login = (props) => {
       </div>
     
 }
+type MapPropsType = ReturnType<typeof mapStateToProps>
 
-let mapStateToProps = (state) => ({
+type MapDispatchToProps = {
+  login: (email: string , password: string, rememberme: boolean , captcha: string) => void 
+}
+
+let mapStateToProps = (state: AppStateType) => ({
   isAuth: state.Auth.isAuth,
   messages: state.Auth.messages,
   captchaUrl: state.Auth.captchaUrl
   });
 
-export default connect(mapStateToProps, {login})(Login);
+
+
+export default connect<MapPropsType, MapDispatchToProps, {}, AppStateType>(mapStateToProps, {login})(Login);
 
 
 const SignupSchema = Yup.object().shape({
@@ -36,7 +50,13 @@ const SignupSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
 });
 
-export const LoginForm = (props) => (
+type LoginForm = {
+  messages: string | null,
+  captchaUrl: string | null,
+  login: (email: string , password: string, rememberme: boolean , captcha: string) => void
+}
+
+export const LoginForm: React.FC<LoginForm> = (props) => (
   <div>
     <h1>Login</h1>
     <Formik
@@ -45,6 +65,7 @@ export const LoginForm = (props) => (
         password: '',
         captcha: '',
         rememberme: [],
+        error: ""
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, actions) => {
