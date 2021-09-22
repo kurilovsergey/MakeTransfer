@@ -1,5 +1,5 @@
 import { boolean } from "yup/lib/locale";
-import {authAPI, securityAPI} from "../api/api" 
+import {authAPI, ResultCode, securityAPI} from "../api/api" 
 import { Dispatch } from 'react';
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AppStateType } from "./reduxstore";
@@ -85,9 +85,10 @@ export const getCaptchaUrlSucces = (captchaUrl: string): getCaptchaUrlSuccesType
 })
 
 export const getAuthUserData = (): ThunkType => async (dispatch: DispatchType) => {
-  let response = await authAPI.me()
-    let {id,email,login}=response.data.data
-    if (response.data.resultCode==0) {dispatch(setAuthUserData(id, login, email, true))}
+  let MeData = await authAPI.me()
+  
+    let {id,email,login}=MeData.data
+    if (MeData.resultCode == ResultCode.Success) {dispatch(setAuthUserData(id, login, email, true))}
 };
 
 type setResponseLoginErrorMessageType = {
@@ -99,14 +100,14 @@ export const setResponseLoginErrorMessage = (messages: string): setResponseLogin
   
 export const login = (email: string ,password: string, rememberme: boolean, captcha: string):
 ThunkAction<Promise<void>, AppStateType, unknown, ActionsType> => async (dispatch) => {
-    let response = await authAPI.login(email,password,rememberme, captcha)
-    if (response.data.resultCode==0) {dispatch(getAuthUserData())}
+    let LoginData = await authAPI.login(email,password,rememberme, captcha)
+    if (LoginData.resultCode==ResultCode.Success) {dispatch(getAuthUserData())}
       else {
-        console.log(response.data.resultCode)
-        if (response.data.resultCode==10) {
+        console.log(LoginData.resultCode)
+        if (LoginData.resultCode==ResultCode.CaptchaIsRequired) {
           dispatch(getCaptchaUrl())
         }
-         dispatch(setResponseLoginErrorMessage(response.data.messages[0]));
+         dispatch(setResponseLoginErrorMessage(LoginData.messages[0]));
       }
   }; 
 
