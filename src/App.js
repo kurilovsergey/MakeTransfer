@@ -44,7 +44,7 @@ render() {
         </Switch>
       </div>
       </div>
-      </BrowserRouter>
+    </BrowserRouter>
       )
 }
 }

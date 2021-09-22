@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 import {WithAuthRedirect} from '../../hoc/hoc'
 import { compose } from 'redux';
 import {getProfile, getStatusProfile, getAutorizatedUserID, getisAuth, getMessageError} from '../../redux/selectors/user/usersselectors'
-import Preloader from '../common/Preloader/Preloader.jsx';
+import Preloader from '../common/Preloader/Preloader';
 import { string } from 'yup';
 import { RouteComponentProps } from 'react-router-dom';
 import * as H from "history";

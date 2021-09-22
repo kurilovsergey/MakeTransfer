@@ -6,8 +6,6 @@ export type PostType = {
     likes: number
   }
 
-  
-  
   export type ProfileType = {
     userId : number
     lookingForAJob: boolean

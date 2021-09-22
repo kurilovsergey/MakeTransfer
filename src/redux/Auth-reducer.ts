@@ -1,5 +1,9 @@
 import { boolean } from "yup/lib/locale";
 import {authAPI, securityAPI} from "../api/api" 
+import { Dispatch } from 'react';
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { AppStateType } from "./reduxstore";
+
 const SET_RESPONSE_LOGIN_ERROR="SET_RESPONSE_LOGIN_ERROR"
 const SET_USER_DATA="SET_USER_DATA";
 const GET_CAPTCHAURL_SUCCES="GET_CAPTCHAURL_SUCCES"
@@ -55,40 +59,51 @@ type setAuthUserDataActionPaylaodType = {
 
 }
 
-type setAuthUserDataActionType = {
+type ActionsType = setAuthUserDataType | getCaptchaUrlSuccesType | setResponseLoginErrorMessageType;
+
+type DispatchType = Dispatch<ActionsType>
+
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+
+type setAuthUserDataType = {
   type: typeof SET_USER_DATA,
   payload: setAuthUserDataActionPaylaodType
 }
 
 export default Auth_reducer;
 
-export const setAuthUserData = ( userID: number | null, login: string | null, email: string | null, isAuth: boolean): setAuthUserDataActionType => ({type:SET_USER_DATA, payload:{ userID, login, email, isAuth}});
+export const setAuthUserData = ( userID: number | null, login: string | null, email: string | null, isAuth: boolean): setAuthUserDataType => ({type:SET_USER_DATA, payload:{ userID, login, email, isAuth}});
 
-type getCaptchaUrlSucces = {
+type getCaptchaUrlSuccesType = {
   type: typeof GET_CAPTCHAURL_SUCCES,
   captchaUrl: string
 }
 
-export const getCaptchaUrlSucces = (captchaUrl: string): getCaptchaUrlSucces => ({
+export const getCaptchaUrlSucces = (captchaUrl: string): getCaptchaUrlSuccesType => ({
   type: GET_CAPTCHAURL_SUCCES,
   captchaUrl
 })
 
-export const getAuthUserData = () => async (dispatch: any) => {
+export const getAuthUserData = (): ThunkType => async (dispatch: DispatchType) => {
   let response = await authAPI.me()
     let {id,email,login}=response.data.data
     if (response.data.resultCode==0) {dispatch(setAuthUserData(id, login, email, true))}
 };
 
-export const setResponseLoginErrorMessage = (messages: string) => ({type: SET_RESPONSE_LOGIN_ERROR, messages})
+type setResponseLoginErrorMessageType = {
+  type: typeof SET_RESPONSE_LOGIN_ERROR,
+  messages: string
+}
+
+export const setResponseLoginErrorMessage = (messages: string): setResponseLoginErrorMessageType => ({type: SET_RESPONSE_LOGIN_ERROR, messages})
   
-export const login = (email: string ,password: string, rememberme: boolean, captcha: string) => async (dispatch: any) => {
+export const login = (email: string ,password: string, rememberme: boolean, captcha: string):
+ThunkAction<Promise<void>, AppStateType, unknown, ActionsType> => async (dispatch) => {
     let response = await authAPI.login(email,password,rememberme, captcha)
     if (response.data.resultCode==0) {dispatch(getAuthUserData())}
       else {
         console.log(response.data.resultCode)
         if (response.data.resultCode==10) {
-          console.log("login response ",response);
           dispatch(getCaptchaUrl())
         }
          dispatch(setResponseLoginErrorMessage(response.data.messages[0]));
@@ -103,15 +118,14 @@ export const login = (email: string ,password: string, rememberme: boolean, capt
   } 
   */
 
-  export const logout = () => async (dispatch: any) => {
+  export const logout = (): ThunkType => async (dispatch: DispatchType) => {
     let response = await authAPI.logout();
       if (response.data.resultCode==0) {dispatch(setAuthUserData(null, null, null, false))} 
 
   } 
   
- export const getCaptchaUrl = () => async (dispatch : any) => {
+ export const getCaptchaUrl = (): ThunkType => async (dispatch : DispatchType) => {
   let response = await securityAPI.getCaptchaUrl();
   const captchaUrl = response.data.url;
-  console.log("capthca= ",captchaUrl)
   dispatch(getCaptchaUrlSucces(captchaUrl));
  }

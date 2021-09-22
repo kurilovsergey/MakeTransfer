@@ -27,7 +27,7 @@ let initialstate = {
 
 export type InitialstateType = typeof initialstate;
 
-export const dialog_reducer = (state: InitialstateType = initialstate, action: any) => {
+export const dialog_reducer = (state: InitialstateType = initialstate, action: sendmessageType) => {
     if (action.type === SEND_MESSAGE) {
       let body = action.newmessage;
       console.log('body ',body)
