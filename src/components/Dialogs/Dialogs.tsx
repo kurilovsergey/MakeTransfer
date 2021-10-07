@@ -6,6 +6,7 @@ import Message from './Message/Message';
 import Login from '../Login/Login';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { StringLiteralType } from 'typescript';
 
 export type DialogType = {
   id: number,
@@ -95,3 +96,8 @@ export default Dialogs;
       </Formik>
     </div>
   );
+
+  
+
+  
+  

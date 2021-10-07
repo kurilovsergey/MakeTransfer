@@ -135,7 +135,7 @@ export const setResponseUpdateProfileErrorMessage = (messages: string): setRespo
 
 export let getStatus = (userId: number): ThunkType => async (dispatch: DispatchType) => {
     let response = await ProfileAPI.getStatus(userId)
-      dispatch(setStatus(response.data));
+      dispatch(setStatus(response.data)); //response.data
 }; 
 
 
@@ -162,12 +162,12 @@ export let savePhoto = (file: File): ThunkType => async (dispatch: DispatchType)
   };
 
   
-  export let saveProfile = (profile: ProfileType, userId: number): ThunkType => async (dispatch: DispatchType) => {
+  export let saveProfile = (profile: ProfileType, userId: number): ThunkType => async (dispatch: DispatchType, getState) => {
     let response = await ProfileAPI.saveProfile(profile)
+    
     if (response.data.resultCode===0) {
-      console.log("ответ ",response)
-    response = await ProfileAPI.getProfile(userId)
-    console.log("запрос профиля ",response)
+    let response = await ProfileAPI.getProfile(userId)
+    console.log('profleAPI', response);
       dispatch(setuserprofile(response.data));
       dispatch(setResponseUpdateProfileErrorMessage(response.data.messages))
   } else {

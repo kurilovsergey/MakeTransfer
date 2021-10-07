@@ -1,4 +1,5 @@
 import { string } from "yup/lib/locale";
+import { AppStateType, InferActionsType, BaseThunkType } from "./reduxstore";
 
 const SEND_MESSAGE = "SEND MESSAGE";
 
@@ -27,7 +28,7 @@ let initialstate = {
 
 export type InitialstateType = typeof initialstate;
 
-export const dialog_reducer = (state: InitialstateType = initialstate, action: sendmessageType) => {
+export const dialog_reducer = (state: InitialstateType = initialstate, action: ActionsType) => {
     if (action.type === SEND_MESSAGE) {
       let body = action.newmessage;
       console.log('body ',body)
@@ -40,6 +41,19 @@ type sendmessageType = {
     type: typeof SEND_MESSAGE,
     newmessage: string
 }
+
+let actions = {
+    sendmessage: (newmessage: string) => {
+        return {
+           type: SEND_MESSAGE,
+           newmessage
+               } as const
+              }
+}
+
+type ActionsType = InferActionsType<typeof actions>
+
+export type ThunkType = BaseThunkType<ActionsType>
 
 export let sendmessage  = (newmessage: string): sendmessageType => {
     return {
