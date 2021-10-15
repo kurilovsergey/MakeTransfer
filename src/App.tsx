@@ -6,19 +6,30 @@ import Navbar from './components/Navbar/Navbar.jsx';
 import UsersContainer from './components/Users/UsersContainer';
 import {BrowserRouter, HashRouter, Route, Switch, withRouter} from 'react-router-dom'
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
-import Login from '././components/Login/Login'
+import Login from './components/Login/Login'
 import {connect} from 'react-redux';
-import {initializeApp} from '../src/redux/app-reducer';
+import {initializeApp} from './redux/app-reducer';
 import { compose } from 'redux';
 import Preloader from './components/common/Preloader/Preloader'
 import {Provider} from "react-redux";
-import store from './redux/reduxstore';
-import {WithSuspence} from '../src/hoc/withSuspense'
+import store, { AppStateType } from './redux/reduxstore';
+import {WithSuspense} from './hoc/withSuspense'
+
+//var UsersContainer = require("UsersContainer")
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+//const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
-class App extends React.Component {
+const SuspendedDialog = WithSuspense(DialogsContainer)
+const SuspendedProfile = WithSuspense(ProfileContainer)
+
+type PropsType = {
+  initialized: boolean,
+  initializeApp: () => void
+}
+
+class App extends React.Component<PropsType> {
 
   componentDidMount() {
     this.props.initializeApp();
@@ -36,9 +47,9 @@ render() {
       <Navbar />
       <div className='app-wrapper-content'>
         <Switch>
-        <Route path='/dialogs' render= {WithSuspence(DialogsContainer)}/>
-        <Route path='/profile/:userId?' render= {WithSuspence(ProfileContainer)} />
-        <Route path='/users' render= {()=><UsersContainer />} />
+        <Route path='/dialogs' render= {()=><SuspendedDialog/>}/>
+        <Route path='/profile/:userId?' render= {()=><SuspendedProfile/>} />
+        <Route path='/users' render= {()=><UsersContainer/>} />
         <Route path='/login' render= {()=><Login/>} />
         <Route path='*' render= {()=><>404 not found</>} />
         </Switch>
@@ -49,13 +60,13 @@ render() {
 }
 }
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state: AppStateType) =>({
   initialized: state.App.initialized
 });
 
 let AppContainer =  connect(mapStateToProps,{initializeApp})(App);
 
-let MainApp = (props) => {
+let MainApp: React.FC = () => {
   return (
   
    <Provider store={store}>

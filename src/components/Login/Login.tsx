@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 //import { MoreResources, DisplayFormikState } from "./helper";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { login, setResponseLoginErrorMessage } from '../../redux/Auth-reducer';
+import { login } from '../../redux/Auth-reducer';
 import { compose } from 'redux';
 import { Redirect } from "react-router"
 import { AppStateType } from '../../redux/reduxstore';

@@ -5,7 +5,7 @@ import {connect, MapDispatchToProps, MapStateToProps} from 'react-redux';
 import {getUserProfile, setuserprofile, updateStatus, getStatus, savePhoto, saveProfile, resetMessageError} from '../../redux/profile-reducer';
 import {withRouter} from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
-import {WithAuthRedirect} from '../../hoc/hoc'
+//import {withAuthRedirect} from '../../hoc/hoc'
 import { compose } from 'redux';
 import {getProfile, getStatusProfile, getAutorizatedUserID, getisAuth, getMessageError} from '../../redux/selectors/user/usersselectors'
 import Preloader from '../common/Preloader/Preloader';

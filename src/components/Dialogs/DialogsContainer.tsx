@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import s from './Dialogs.module.css';
-import {WithAuthRedirect} from '../../hoc/hoc'
+import {withAuthRedirect} from '../../hoc/hoc'
 import {sendmessage} from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
@@ -35,5 +35,5 @@ const mapDispatchTooProps = (dispatch) => {
 
 export default compose<React.ComponentType>(
 	connect(mapStateToProps, {sendmessage}),
-	WithAuthRedirect
+	withAuthRedirect
 )(Dialogs);
