@@ -82,6 +82,7 @@ export default Dialogs;
           // same shape as initial values
           //console.log("errors= ");
           props.addNewMessage(values.newmessage);
+          
         }}
       >
         {({ errors, touched }) => (
@@ -90,7 +91,7 @@ export default Dialogs;
             {errors.newmessage && touched.newmessage ? (
               <div>{errors.newmessage}</div>
             ) : null}
-            <button type="submit">Submit</button>
+            <button type="submit">Find</button>
           </Form>
         )}
       </Formik>

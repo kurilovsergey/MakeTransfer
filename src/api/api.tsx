@@ -21,8 +21,8 @@ type GetUsersType = {
 
 
 export const UsersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data);     
+    getUsers(currentPage: number, pageSize: number, term: string = "", friend: null | boolean = null) {
+        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}&term=${term}`+(friend==null ? "" : `&friend=${friend}`)).then(response => response.data);     
     },
     unfollow(userID: number) {
         return instance.delete(`follow/${userID}`) as AxiosPromise<ResponseType>

@@ -10,6 +10,7 @@ import {withAuthRedirect} from '../../hoc/hoc'
 import { login } from '../../redux/Auth-reducer';
 import {UserType} from '../../types/types'
 import {AppStateType} from '../../redux/reduxstore'
+import {FilterType} from '../../redux/users-reducer'
 
 type OwnPropsType = {
  own: number
@@ -22,14 +23,17 @@ type MapStateToPropsType = {
     isFetching: boolean
     totalUsersCount: number
     followinginProgress: Array<number>
-    isAuth: boolean
+    isAuth: boolean,
+    filter: FilterType
+    
 }
 
 type MapDispatchToPropsType = {
     //onPageChanged: (pageNumber: number) => void 
     follow: (userID: number) => void
     unfollow: (userID: number) => void
-    getUsers: (currentPage: number, pageSize: number) => void
+    getUsers: (currentPage: number, pageSize: number, filter: FilterType) => void
+    
 }
 
 type PropType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
@@ -38,11 +42,15 @@ class UsersContainer extends React.Component<PropType> {
     
 	
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);         
+        this.props.getUsers(this.props.currentPage, this.props.pageSize, this.props.filter);         
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize);  
+        this.props.getUsers(pageNumber, this.props.pageSize, this.props.filter);  
+    }
+
+    onFilerChanged = (filter: FilterType) => {
+        this.props.getUsers(1, this.props.pageSize, filter); 
     }
   
 render() {
@@ -52,6 +60,7 @@ return (
     {this.props.isFetching ? <Preloader/> : null}
     <Users 
     onPageChanged={this.onPageChanged}
+    onFilerChanged={this.onFilerChanged}
     totalUsersCount={this.props.totalUsersCount}
     pageSize={this.props.pageSize}
     currentPage={this.props.currentPage}
@@ -73,7 +82,8 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followinginProgress: state.usersPage.followinginProgress,
-        isAuth: state.Auth.isAuth
+        isAuth: state.Auth.isAuth,
+        filter: state.usersPage.filter
     }
 }
 

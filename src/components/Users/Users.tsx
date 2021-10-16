@@ -4,11 +4,15 @@ import * as axios from 'axios';
 import {NavLink} from "react-router-dom";
 import userPhoto from '../../assets/images/userPhoto.png'
 import { UsersAPI } from '../../api/api';
-import { follow } from '../../redux/users-reducer';
+import { FilterType, follow } from '../../redux/users-reducer';
 import {UserType} from '../../types/types'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { isPropertySignature } from 'typescript';
+import { string } from 'yup/lib/locale';
 
 type PropsType = {
     onPageChanged: (pageNumber: number) => void 
+    onFilerChanged: (filter: FilterType) => void
     users: Array<UserType>
     pageSize: number
     totalUsersCount: number
@@ -40,6 +44,7 @@ let Users: React.FC<PropsType> = (props) => {
     let rightPortionPageNumber = portionNumber * portionSize;
 
 	return <div>
+        <UserSearch onFilerChanged={props.onFilerChanged}/>
          <div>
         {portionNumber>1 &&
          <button onClick={()=> setPortionNumber(portionNumber-1)}>{"<<"}</button>}
@@ -87,3 +92,63 @@ let Users: React.FC<PropsType> = (props) => {
 }
 
 export default Users;
+
+type UserSearchFormValidate = {
+    term: string
+}
+
+const userSearchFormValidate = (values: any) => {
+    const errors = {};
+    return errors;
+  }
+
+  type FormType = {
+      term: string,
+      friend: "true" | "false" | "null"
+  }
+  
+  type UserSearchType = {
+    onFilerChanged: (filter: FilterType) => void
+  }
+
+const UserSearch: React.FC<UserSearchType> = (props) => {
+    
+    const submit = (values: FormType, { setSubmitting }: {setSubmitting: (isSubmiting: boolean) => void}) => {
+        const Filter: FilterType = {
+            term: values.term,
+            friend: values.friend==='false' ? false : values.friend==='true' ? true : null
+
+        }
+        
+        props.onFilerChanged(Filter)
+        
+          setSubmitting(false);
+       
+      }
+
+    return <div>
+      <h1>Any place in your app!</h1>
+      <Formik
+        initialValues={{term: '', friend: 'null' }}
+        validate={userSearchFormValidate}
+        onSubmit={submit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <Field type="text" name="term" />
+           {// <ErrorMessage name="email" component="div" />
+           }
+            
+            <Field name="friend" as="select">
+            <option value="null">all</option>
+            <option value="true">only followed</option>
+            <option value="false">only unfollowed</option>
+            </Field>
+            <button type="submit" disabled={isSubmitting}>
+              Filter
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </div>
+};
