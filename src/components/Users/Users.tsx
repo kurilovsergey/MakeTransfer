@@ -4,31 +4,70 @@ import * as axios from 'axios';
 import {NavLink} from "react-router-dom";
 import userPhoto from '../../assets/images/userPhoto.png'
 import { UsersAPI } from '../../api/api';
-import { FilterType, follow } from '../../redux/users-reducer';
-import {UserType} from '../../types/types'
+import { FilterType, follow, unfollow, getUsers } from '../../redux/users-reducer';
+import {ProfileType, UserType} from '../../types/types'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { isPropertySignature } from 'typescript';
 import { string } from 'yup/lib/locale';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTotalUsersCount, getCurrentPage, getPageSize, getFilter, getUsersSelector, getFollowinginProgress } from '../../redux/selectors/user/usersselectors';
+
 
 type PropsType = {
-    onPageChanged: (pageNumber: number) => void 
-    onFilerChanged: (filter: FilterType) => void
-    users: Array<UserType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
+    //onPageChanged: (pageNumber: number) => void 
+    //onFilerChanged: (filter: FilterType) => void
+    //users: Array<UserType>
+    //pageSize: number
+    //totalUsersCount: number
+    //currentPage: number
     isFetching?: boolean
-    followinginProgress: Array<number>
-    follow: (userID: number) => void
-    unfollow: (userID: number) => void
+    //followinginProgress: Array<number>
+    //follow: (userID: number) => void
+    //unfollow: (userID: number) => void
 }
 
 
-let Users: React.FC<PropsType> = (props) => {
+export const Users: React.FC<PropsType> = (props) => {
 
-	let pagesCount = Math.ceil(props.totalUsersCount/props.pageSize);
+  const totalUsersCount = useSelector(getTotalUsersCount)
+  
+  const currentPage = useSelector(getCurrentPage)
+
+  const pageSize = useSelector(getPageSize)
+
+  const filter = useSelector(getFilter)
+ 
+  const users = useSelector(getUsersSelector)
+
+  const followinginProgress = useSelector(getFollowinginProgress)
+
+  let dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getUsers(currentPage, pageSize, filter));    
+  },[])
+
+  const onPageChanged = (pageNumber: number) => {
+    dispatch(getUsers(pageNumber, pageSize, filter));  
+  }
+
+  const onFilerChanged = (filter: FilterType) => {
+    dispatch(getUsers(1, pageSize, filter)); 
+}
+
+const follow = (userID: number) => {
+  dispatch(follow(userID))
+}
+
+const unfollow = (userID: number) => {
+  dispatch(unfollow(userID))
+}
+  
+	let pagesCount = Math.ceil(totalUsersCount/pageSize);
 
 	let pages: Array<number> = [];
+
+  
 
 	for (let i=1; i<=pagesCount; i++) {
 		pages.push(i);
@@ -44,20 +83,20 @@ let Users: React.FC<PropsType> = (props) => {
     let rightPortionPageNumber = portionNumber * portionSize;
 
 	return <div>
-        <UserSearch onFilerChanged={props.onFilerChanged}/>
+        <UserSearch onFilerChanged={onFilerChanged}/>
          <div>
         {portionNumber>1 &&
          <button onClick={()=> setPortionNumber(portionNumber-1)}>{"<<"}</button>}
            {pages.filter(p=> p>=leftPortionPageNumber && p<=rightPortionPageNumber).map(p =>
          //   <span className={props.currentPage == p && s.selectPage} 
-         <span className={  props.currentPage == p ? s.selectPage : s.regularPage} 
-		                         onClick={(e)=>props.onPageChanged(p)}>{" "+p}</span>)}
+         <span className={  currentPage == p ? s.selectPage : s.regularPage} 
+		                         onClick={(e)=>onPageChanged(p)}>{" "+p}</span>)}
 		{portionNumber<portionCounter &&
         <button onClick={()=> setPortionNumber(portionNumber+1)}>{">>"}</button>}
          </div>
          
-       {
-            props.users.map(u => <div key={u.id}>
+       {  //временное решение поставить any 
+            users.map((u: any) => <div key={u.id}> 
                 <span>
                     <div>
                       <NavLink to={'/profile/' + u.id}>
@@ -66,12 +105,12 @@ let Users: React.FC<PropsType> = (props) => {
                        </NavLink>
                        
                         {u.followed
-                            ? <button disabled={props.followinginProgress.some( id => id === u.id)} onClick={() => {
-                              props.unfollow(u.id);    
+                            ? <button disabled={followinginProgress.some((id: any) => id === u.id)} onClick={() => {
+                              unfollow(u.id);    
                             }}>
                                 Unfollow</button>
-                            : <button disabled={props.followinginProgress.some(id => id === u.id)} onClick={() => {
-                                props.follow(u.id) }}>
+                            : <button disabled={followinginProgress.some((id:any) => id === u.id)} onClick={() => {
+                                follow(u.id) }}>
                                     Follow</button>}
 
                     </div>

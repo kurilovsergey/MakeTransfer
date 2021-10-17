@@ -3,7 +3,6 @@ import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar.jsx';
 //import ProfileContainer from './components/Profile/ProfileContainer';
-import UsersContainer from './components/Users/UsersContainer';
 import {BrowserRouter, HashRouter, Route, Switch, withRouter} from 'react-router-dom'
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Login from './components/Login/Login'
@@ -14,6 +13,8 @@ import Preloader from './components/common/Preloader/Preloader'
 import {Provider} from "react-redux";
 import store, { AppStateType } from './redux/reduxstore';
 import {WithSuspense} from './hoc/withSuspense'
+import { UsersPage } from './components/Users/UsersContainer';
+
 
 //var UsersContainer = require("UsersContainer")
 
@@ -49,7 +50,7 @@ render() {
         <Switch>
         <Route path='/dialogs' render= {()=><SuspendedDialog/>}/>
         <Route path='/profile/:userId?' render= {()=><SuspendedProfile/>} />
-        <Route path='/users' render= {()=><UsersContainer/>} />
+        <Route path='/users' render= {()=><UsersPage/>} />
         <Route path='/login' render= {()=><Login/>} />
         <Route path='*' render= {()=><>404 not found</>} />
         </Switch>
