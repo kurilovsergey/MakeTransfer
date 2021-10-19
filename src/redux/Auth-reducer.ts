@@ -113,6 +113,7 @@ ThunkAction<Promise<void>, AppStateType, unknown, ActionsType> => async (dispatc
 
   export const logout = (): ThunkType => async (dispatch: DispatchType) => {
     let response = await authAPI.logout();
+    //@ts-ignore
       if (response.data.resultCode==0) {dispatch(actions.setAuthUserData(null, null, null, false))} 
 
   } 

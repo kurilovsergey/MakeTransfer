@@ -10,6 +10,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { isPropertySignature } from 'typescript';
 import { string } from 'yup/lib/locale';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import { getTotalUsersCount, getCurrentPage, getPageSize, getFilter, getUsersSelector, getFollowinginProgress } from '../../redux/selectors/user/usersselectors';
 
 
@@ -44,8 +45,43 @@ export const Users: React.FC<PropsType> = (props) => {
   let dispatch = useDispatch()
 
   useEffect(()=>{
-    dispatch(getUsers(currentPage, pageSize, filter));    
+    const {search} = history.location
+    const queryString = require('query-string');
+    const parsed = queryString.parse(search);
+
+    let actualPage = currentPage
+    let actualFilter = filter
+
+    if (!!parsed.page) actualPage = Number(parsed.page)
+    
+    if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term}
+
+    switch(parsed.friend) {
+    case "null":
+      actualFilter = {...actualFilter, friend: null}
+      break
+    case "true":
+      actualFilter = {...actualFilter, friend: true}
+      break
+    case "false":
+      actualFilter = {...actualFilter, friend: false}
+      break
+    }
+
+
+    console.log(parsed)
+    dispatch(getUsers(actualPage, pageSize, actualFilter));    
   },[])
+
+  useEffect(()=>{
+    history.push({
+      pathname: '/users',
+      search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+    })
+     
+  },[filter, currentPage])
+
+  const history = useHistory();
 
   const onPageChanged = (pageNumber: number) => {
     dispatch(getUsers(pageNumber, pageSize, filter));  
@@ -55,11 +91,11 @@ export const Users: React.FC<PropsType> = (props) => {
     dispatch(getUsers(1, pageSize, filter)); 
 }
 
-const follow = (userID: number) => {
+const _follow = (userID: number) => {
   dispatch(follow(userID))
 }
 
-const unfollow = (userID: number) => {
+const _unfollow = (userID: number) => {
   dispatch(unfollow(userID))
 }
   
@@ -106,11 +142,11 @@ const unfollow = (userID: number) => {
                        
                         {u.followed
                             ? <button disabled={followinginProgress.some((id: any) => id === u.id)} onClick={() => {
-                              unfollow(u.id);    
+                              _unfollow(u.id);    
                             }}>
                                 Unfollow</button>
                             : <button disabled={followinginProgress.some((id:any) => id === u.id)} onClick={() => {
-                                follow(u.id) }}>
+                                _follow(u.id) }}>
                                     Follow</button>}
 
                     </div>
@@ -151,6 +187,8 @@ const userSearchFormValidate = (values: any) => {
   }
 
 const UserSearch: React.FC<UserSearchType> = (props) => {
+
+  const filter = useSelector(getFilter)
     
     const submit = (values: FormType, { setSubmitting }: {setSubmitting: (isSubmiting: boolean) => void}) => {
         const Filter: FilterType = {
@@ -168,7 +206,8 @@ const UserSearch: React.FC<UserSearchType> = (props) => {
     return <div>
       <h1>Any place in your app!</h1>
       <Formik
-        initialValues={{term: '', friend: 'null' }}
+        enableReinitialize
+        initialValues={{term: filter.term, friend: filter.friend }}
         validate={userSearchFormValidate}
         onSubmit={submit}
       >
