@@ -14,16 +14,23 @@ import {Provider} from "react-redux";
 import store, { AppStateType } from './redux/reduxstore';
 import {WithSuspense} from './hoc/withSuspense'
 import { UsersPage } from './components/Users/UsersContainer';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+//import { ChatPage } from './pages/Chat/ChatPage';
 
+const { SubMenu } = Menu;
+const { Header, Content, Footer, Sider } = Layout;
 
 //var UsersContainer = require("UsersContainer")
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const ChatPage = React.lazy(() => import('./pages/Chat/ChatPage'));
 //const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 const SuspendedDialog = WithSuspense(DialogsContainer)
 const SuspendedProfile = WithSuspense(ProfileContainer)
+const SuspendedChat = WithSuspense(ChatPage)
 
 type PropsType = {
   initialized: boolean,
@@ -37,11 +44,14 @@ class App extends React.Component<PropsType> {
 }
 
 render() {
+
+
+
   if (!this.props.initialized) {
     return <Preloader/>
   }
 
-  return (
+  return ( 
   	<BrowserRouter>
     <div className='app-wrapper'>
       <HeaderContainer />
@@ -52,6 +62,7 @@ render() {
         <Route path='/profile/:userId?' render= {()=><SuspendedProfile/>} />
         <Route path='/users' render= {()=><UsersPage/>} />
         <Route path='/login' render= {()=><Login/>} />
+        <Route path='/chat' render= {()=><SuspendedChat/>} />
         <Route path='*' render= {()=><>404 not found</>} />
         </Switch>
       </div>

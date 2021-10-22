@@ -3,6 +3,7 @@ import s from './Profile.module.css';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Profileinfo from './Profileinfo/Profileinfo'
 import { ProfileType } from '../../types/types';
+import { Button } from 'antd/lib/radio';
 
 type ValueType = {
   fullname?: string,
