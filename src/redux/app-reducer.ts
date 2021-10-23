@@ -38,7 +38,6 @@ export default App_reducer
 
   export const initializeApp = () => (dispatch: any) => {
     let promise = dispatch(getAuthUserData());
-    debugger
     //dispatch(getAuthUserData());
     //dispatch(InitializedSucces());
     promise.then(()=>{
