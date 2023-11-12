@@ -5,7 +5,7 @@
   "homepage": "https://kurilovsergey.github.io/MakeTransfer",
   "dependencies": {
     "antd": "^4.16.13",
-    "axios": "^0.23.0",
+    "axios": "^1.6.0",
     "final-form": "^4.20.4",
     "formik": "^2.2.9",
     "npm-check-updates": "^11.8.5",
